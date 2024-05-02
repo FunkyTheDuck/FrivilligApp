@@ -4,15 +4,10 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>H5MiniSvendeprøveS_M</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\ApiRepository\ApiRepository.csproj" />
+    <ProjectReference Include="..\BlazorRepo\BlazorRepository.csproj" />
     <ProjectReference Include="..\FrontendModels\FrontendModels.csproj" />
   </ItemGroup>
 
