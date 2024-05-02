@@ -1,0 +1,6 @@
+@H5MiniSvendeprøveS_M_HostAddress = http://localhost:5191
+
+GET {{H5MiniSvendeprøveS_M_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
