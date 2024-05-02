@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FrontendModels
 {
-    public class Event_info
+    public class EventInfo
     {
         public int Id {  get; set; }
         public int Event_id { get; set; }

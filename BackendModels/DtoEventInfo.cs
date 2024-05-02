@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BackendModels
 {
-    public class DtoEvent_info
+    public class DtoEventInfo
     {
         public int DtoId {  get; set; }
         public int DtoEvent_id { get; set; }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BackendModels
 {
-    public class DtoUser_info
+    public class DtoUserInfo
     {
         public int DtoId { get; set; }
         public int DtoUser_Id { get; set; }
