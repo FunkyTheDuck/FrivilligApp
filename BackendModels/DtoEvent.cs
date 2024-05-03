@@ -11,11 +11,11 @@ namespace BackendModels
         public int DtoId { get; set; }
         public int DtoOwner_id { get; set; }
         public DtoUser DtoOwner { get; set; }
-        public int DtoVoluntary_id { get; set; }
+        public int DtoVoluntaryId { get; set; }
         public List<DtoUser> DtoVolunteers { get; set; }
         public string DtoTitle { get; set; }
         public string DtoDescription { get; set; }
-        public string DtoImage_url { get; set; }
-        public int DtoWanted_volunteers { get; set; }
+        public string DtoImageUrl { get; set; }
+        public int DtoWantedVolunteers { get; set; }
     }
 }

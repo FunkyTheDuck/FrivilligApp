@@ -9,9 +9,9 @@ namespace BackendModels
     public class DtoRatings
     {
         public int DtoId {  get; set; }
-        public int DtoSender_id { get; set; }
+        public int DtoSenderId { get; set; }
         public DtoUser DtoSender { get; set; }
-        public int DtoReceiver_id { get; set; }
+        public int DtoReceiverId { get; set; }
         public DtoUser DtoReceiver { get; set; }
         public int DtoRating { get; set; }
         public string DtoReason { get; set; }

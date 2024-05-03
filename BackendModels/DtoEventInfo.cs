@@ -9,10 +9,10 @@ namespace BackendModels
     public class DtoEventInfo
     {
         public int DtoId {  get; set; }
-        public int DtoEvent_id { get; set; }
+        public int DtoEventId { get; set; }
         public DtoEvent DtoEvent { get; set; }
         public string DtoAddress { get; set; }
-        public int DtoSkills_id { get; set; }
+        public int DtoSkillsId { get; set; }
         public List<DtoSkills> DtoSkills { get; set; }
         public int DtoInterests_id { get; set; }
         public List<DtoInterests> DtoInterests { get; set; }
