@@ -15,5 +15,9 @@ namespace FrontendModels
         public bool IsVoluntary { get; set; }
         [MaxLength(20)]
         public string Username { get; set; }
+        public int UserCredebtialsId { get; set; }
+        public UserCredentials UserCredebtials { get; set; }
+        public int UserInfoId { get; set; }
+        public UserInfo UserInfo { get; set; }
     }
 }

@@ -29,18 +29,31 @@ namespace ApiDBlayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "UserCredentials",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    EventÍd = table.Column<int>(type: "int", nullable: false),
-                    IsVoluntary = table.Column<bool>(type: "bit", nullable: false),
-                    Username = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.PrimaryKey("PK_UserCredentials", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserInfo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Location = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    SkillsId = table.Column<int>(type: "int", nullable: false),
+                    InterestsId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserInfo", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -66,95 +79,30 @@ namespace ApiDBlayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DtoEventDtoUser",
-                columns: table => new
-                {
-                    EventsId = table.Column<int>(type: "int", nullable: false),
-                    VolunteersId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DtoEventDtoUser", x => new { x.EventsId, x.VolunteersId });
-                    table.ForeignKey(
-                        name: "FK_DtoEventDtoUser_Events_EventsId",
-                        column: x => x.EventsId,
-                        principalTable: "Events",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_DtoEventDtoUser_Users_VolunteersId",
-                        column: x => x.VolunteersId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Ratings",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    SenderId = table.Column<int>(type: "int", nullable: false),
-                    ReceiverId = table.Column<int>(type: "int", nullable: false),
-                    Rating = table.Column<int>(type: "int", nullable: false),
-                    Reason = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false)
+                    EventId = table.Column<int>(type: "int", nullable: false),
+                    IsVoluntary = table.Column<bool>(type: "bit", nullable: false),
+                    Username = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    UserCredebtialsId = table.Column<int>(type: "int", nullable: false),
+                    UserInfoId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Ratings", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Ratings_Users_ReceiverId",
-                        column: x => x.ReceiverId,
-                        principalTable: "Users",
+                        name: "FK_Users_UserCredentials_UserCredebtialsId",
+                        column: x => x.UserCredebtialsId,
+                        principalTable: "UserCredentials",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Ratings_Users_SenderId",
-                        column: x => x.SenderId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserCredentials",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserCredentials", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_UserCredentials_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserInfo",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    Location = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    SkillsId = table.Column<int>(type: "int", nullable: false),
-                    InterestsId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserInfo", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_UserInfo_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
+                        name: "FK_Users_UserInfo_UserInfoId",
+                        column: x => x.UserInfoId,
+                        principalTable: "UserInfo",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -209,6 +157,58 @@ namespace ApiDBlayer.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "DtoEventDtoUser",
+                columns: table => new
+                {
+                    EventsId = table.Column<int>(type: "int", nullable: false),
+                    VolunteersId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DtoEventDtoUser", x => new { x.EventsId, x.VolunteersId });
+                    table.ForeignKey(
+                        name: "FK_DtoEventDtoUser_Events_EventsId",
+                        column: x => x.EventsId,
+                        principalTable: "Events",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DtoEventDtoUser_Users_VolunteersId",
+                        column: x => x.VolunteersId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Ratings",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SenderId = table.Column<int>(type: "int", nullable: false),
+                    ReceiverId = table.Column<int>(type: "int", nullable: false),
+                    Rating = table.Column<int>(type: "int", nullable: false),
+                    Reason = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Ratings", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Ratings_Users_ReceiverId",
+                        column: x => x.ReceiverId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Ratings_Users_SenderId",
+                        column: x => x.SenderId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_DtoEventDtoUser_VolunteersId",
                 table: "DtoEventDtoUser",
@@ -250,14 +250,14 @@ namespace ApiDBlayer.Migrations
                 column: "DtoUserInfoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserCredentials_UserId",
-                table: "UserCredentials",
-                column: "UserId");
+                name: "IX_Users_UserCredebtialsId",
+                table: "Users",
+                column: "UserCredebtialsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserInfo_UserId",
-                table: "UserInfo",
-                column: "UserId");
+                name: "IX_Users_UserInfoId",
+                table: "Users",
+                column: "UserInfoId");
         }
 
         /// <inheritdoc />
@@ -276,19 +276,19 @@ namespace ApiDBlayer.Migrations
                 name: "Skills");
 
             migrationBuilder.DropTable(
-                name: "UserCredentials");
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "EventsInfo");
+
+            migrationBuilder.DropTable(
+                name: "UserCredentials");
 
             migrationBuilder.DropTable(
                 name: "UserInfo");
 
             migrationBuilder.DropTable(
                 name: "Events");
-
-            migrationBuilder.DropTable(
-                name: "Users");
         }
     }
 }

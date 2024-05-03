@@ -10,8 +10,6 @@ namespace FrontendModels
     public class UserInfo
     {
         public int Id { get; set; }
-        public int UserId { get; set; }
-        public User User { get; set; }
         [MaxLength(50)]
         public string Location { get; set; }
         public int SkillsId { get; set; }

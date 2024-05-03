@@ -183,11 +183,17 @@ namespace ApiDBlayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("EventÍd")
+                    b.Property<int>("EventId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsVoluntary")
                         .HasColumnType("bit");
+
+                    b.Property<int>("UserCredebtialsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserInfoId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -195,6 +201,10 @@ namespace ApiDBlayer.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserCredebtialsId");
+
+                    b.HasIndex("UserInfoId");
 
                     b.ToTable("Users");
                 });
@@ -211,12 +221,7 @@ namespace ApiDBlayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("UserCredentials");
                 });
@@ -240,12 +245,7 @@ namespace ApiDBlayer.Migrations
                     b.Property<int>("SkillsId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("UserInfo");
                 });
@@ -317,26 +317,23 @@ namespace ApiDBlayer.Migrations
                         .HasForeignKey("DtoUserInfoId");
                 });
 
-            modelBuilder.Entity("BackendModels.DtoUserCredentials", b =>
+            modelBuilder.Entity("BackendModels.DtoUser", b =>
                 {
-                    b.HasOne("BackendModels.DtoUser", "User")
+                    b.HasOne("BackendModels.DtoUserCredentials", "UserCredebtials")
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("UserCredebtialsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("BackendModels.DtoUserInfo", b =>
-                {
-                    b.HasOne("BackendModels.DtoUser", "User")
+                    b.HasOne("BackendModels.DtoUserInfo", "UserInfo")
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("UserInfoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("UserCredebtials");
+
+                    b.Navigation("UserInfo");
                 });
 
             modelBuilder.Entity("DtoEventDtoUser", b =>
