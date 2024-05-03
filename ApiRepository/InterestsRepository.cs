@@ -15,7 +15,7 @@ namespace ApiRepository
         {
             db = new Database();
         }
-        public async Task<List<DtoInterests>> GetInterests()
+        public async Task<List<DtoInterests>> GetInterestsAsync()
         {
             List<DtoInterests> interests = new List<DtoInterests>();
             return interests;

@@ -10,10 +10,10 @@ namespace BackendModels
     public class DtoEventInfo
     {
         public int Id {  get; set; }
-        public int EventId { get; set; }
-        public DtoEvent Event { get; set; }
         [MaxLength(100)]
         public string Address { get; set; }
+        public double CoordinateX { get; set; }
+        public double CoordinateY { get; set; }
         public int SkillsId { get; set; }
         public List<DtoSkills> Skills { get; set; }
         public int InterestsId { get; set; }

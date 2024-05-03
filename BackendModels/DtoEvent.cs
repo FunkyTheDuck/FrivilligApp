@@ -23,5 +23,7 @@ namespace BackendModels
         [MaxLength(101)]
         public string ImageUrl { get; set; }
         public int WantedVolunteers { get; set; }
+        public int EventInfoId { get; set; }
+        public DtoEventInfo EventInfo { get; set; }
     }
 }

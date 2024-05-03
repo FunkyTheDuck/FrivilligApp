@@ -15,23 +15,23 @@ namespace ApiRepository
         { 
             db = new Database();
         }
-        public async Task<DtoUser> LogUserIn(string username, string hashedPassword)
+        public async Task<DtoUser> LogUserInAsync(string username, string hashedPassword)
         {
             DtoUser user = new DtoUser();
             return user;
         }
 
-        public async Task<bool> CreateUser(DtoUser user)
+        public async Task<bool> CreateUserAsync(DtoUser user)
         {
             return true;
         }
 
-        public async Task<bool> DeleteUser(int userId)
+        public async Task<bool> DeleteUserAsync(int userId)
         {
             return true;
         }
 
-        public async Task<bool> UpdateUser(DtoUser user)
+        public async Task<bool> UpdateUserAsync(DtoUser user)
         {
             return true;
         }

@@ -15,17 +15,17 @@ namespace ApiRepository
         {
             db = new Database();
         }
-        public async Task<bool> CreateRating(DtoRatings rating)
+        public async Task<bool> CreateRatingAsync(DtoRatings rating)
         {
             return true;
         }
 
-        public async Task<bool> DeleteRating(int ratingId)
+        public async Task<bool> DeleteRatingAsync(int ratingId)
         {
             return true;
         }
 
-        public async Task<List<DtoRatings>> GetUsersRating(int userId)
+        public async Task<List<DtoRatings>> GetUsersRatingAsync(int userId)
         {
             List<DtoRatings> Rating = new List<DtoRatings>();
             return Rating;

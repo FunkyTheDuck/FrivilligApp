@@ -15,7 +15,7 @@ namespace ApiRepository
         {
            db = new Database();
         }
-        public async Task<List<DtoSkills>> GetSkills()
+        public async Task<List<DtoSkills>> GetSkillsAsync()
         {
             List<DtoSkills> skills = new List<DtoSkills>();
             return skills;

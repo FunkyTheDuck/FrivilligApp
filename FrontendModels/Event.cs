@@ -21,5 +21,7 @@ namespace FrontendModels
         [MaxLength(101)]
         public string ImageUrl { get; set; }
         public int WantedVolunteers { get; set; }
+        public int EventInfoId { get; set; }
+        public EventInfo EventInfo { get; set; }
     }
 }

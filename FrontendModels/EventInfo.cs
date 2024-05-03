@@ -10,8 +10,6 @@ namespace FrontendModels
     public class EventInfo
     {
         public int Id {  get; set; }
-        public int EventId { get; set; }
-        public Event Event { get; set; }
         [MaxLength(100)]
         public string Address { get; set; }
         public int SkillsId { get; set; }
