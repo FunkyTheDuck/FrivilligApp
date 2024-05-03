@@ -1,4 +1,4 @@
-using FrivilligHjemmeside.Components;
+using BlazorWebsite.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 

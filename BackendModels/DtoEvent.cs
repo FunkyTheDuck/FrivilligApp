@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,14 +10,18 @@ namespace BackendModels
 {
     public class DtoEvent
     {
-        public int DtoId { get; set; }
-        public int DtoOwner_id { get; set; }
-        public DtoUser DtoOwner { get; set; }
-        public int DtoVoluntaryId { get; set; }
-        public List<DtoUser> DtoVolunteers { get; set; }
-        public string DtoTitle { get; set; }
-        public string DtoDescription { get; set; }
-        public string DtoImageUrl { get; set; }
-        public int DtoWantedVolunteers { get; set; }
+        public int Id { get; set; }
+        public int OwnerId { get; set; }
+        [NotMapped]
+        public DtoUser Owner { get; set; }
+        public int VoluntaryId { get; set; }
+        public List<DtoUser> Volunteers { get; set; }
+        [MaxLength(50)]
+        public string Title { get; set; }
+        [MaxLength(500)]
+        public string Description { get; set; }
+        [MaxLength(101)]
+        public string ImageUrl { get; set; }
+        public int WantedVolunteers { get; set; }
     }
 }

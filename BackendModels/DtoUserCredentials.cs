@@ -8,9 +8,9 @@ namespace BackendModels
 {
     public class DtoUserCredentials
     {
-        public int DtoId { get; set; }
-        public int DtoUserId { get; set; }
-        public DtoUser DtoUser { get; set; }
-        public string Dtopassword { get; set; }
+        public int Id { get; set; }
+        public int UserId { get; set; }
+        public DtoUser User { get; set; }
+        public string Password { get; set; }
     }
 }
