@@ -15,7 +15,7 @@ namespace BackendModels
         public double LocationY { get; set; }
         public int SkillsId { get; set; }
         public List<DtoSkills> Skills { get; set; }
-        public int InterestsId {  get; set; }
+        public int InterestsId { get; set; }
         public List<DtoInterests> Interests { get; set; }
     }
 }

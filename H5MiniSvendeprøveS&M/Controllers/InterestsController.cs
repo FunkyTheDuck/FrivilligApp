@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ApiRepository;
+using FrontendModels;
 
 namespace H5MiniSvendeprøveS_M.Controllers
 {
@@ -11,6 +12,18 @@ namespace H5MiniSvendeprøveS_M.Controllers
         public InterestsController()
         {
             repo = new InterestsRepository();
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetInterestsAsync()
+        {
+            try
+            {
+                return Ok(await repo.GetInterestsAsync());
+            }
+            catch
+            {
+                return NotFound();
+            }
         }
     }
 }

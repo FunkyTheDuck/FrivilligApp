@@ -4,6 +4,7 @@ using ApiDBlayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApiDBlayer.Migrations
 {
     [DbContext(typeof(Database))]
-    partial class DatabaseModelSnapshot : ModelSnapshot
+    [Migration("20240506124358_addjointable")]
+    partial class addjointable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,12 +85,6 @@ namespace ApiDBlayer.Migrations
 
                     b.Property<double>("CoordinateY")
                         .HasColumnType("float");
-
-                    b.Property<int>("InterestsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SkillsId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -240,18 +237,12 @@ namespace ApiDBlayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("InterestsId")
-                        .HasColumnType("int");
-
                     b.Property<double>("LocationX")
                         .HasMaxLength(50)
                         .HasColumnType("float");
 
                     b.Property<double>("LocationY")
                         .HasColumnType("float");
-
-                    b.Property<int>("SkillsId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

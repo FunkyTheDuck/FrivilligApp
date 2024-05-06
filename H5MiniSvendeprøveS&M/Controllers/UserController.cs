@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ApiRepository;
 using FrontendModels;
+using Microsoft.Extensions.Logging;
 
 namespace H5MiniSvendeprøveS_M.Controllers
 {
@@ -16,22 +17,74 @@ namespace H5MiniSvendeprøveS_M.Controllers
         [HttpGet]
         public async Task<IActionResult> LogUserInAsync(string username, string hashedPassword)
         {
-            return Ok();
+            try
+            {
+                return Ok(await repo.LogUserInAsync(username, hashedPassword));
+            }
+            catch
+            {
+                return NotFound();
+            }
         }
         [HttpPost]
         public async Task<IActionResult> CreateUserAsync(User user)
         {
-            return Ok();
+            if (user != null)
+            {
+                bool succes;
+                try
+                {
+                    succes = await repo.CreateUserAsync(user);
+                }
+                catch
+                {
+                    return NotFound();
+                }
+                if (succes)
+                {
+                    return Ok();
+                }
+            }
+            return BadRequest();
         }
         [HttpDelete]
         public async Task<IActionResult> DeleteUserAsync(int userId)
         {
-            return Ok();
+            bool succes = false;
+            try
+            {
+                succes = await repo.DeleteUserAsync(userId);
+            }
+            catch
+            {
+                return NotFound();
+            }
+            if (succes)
+            {
+                return Ok();
+            }
+            return BadRequest();
         }
         [HttpPut]
         public async Task<IActionResult> UpdateUserAsync(User user)
         {
-            return Ok();
+            if (user != null)
+            {
+                bool succes;
+                try
+                {
+                    succes = await repo.CreateUserAsync(user);
+                }
+                catch
+                {
+                    return NotFound();
+                }
+                if (succes)
+                {
+                    return Ok();
+                }
+            }
+            return BadRequest();
         }
     }
 }

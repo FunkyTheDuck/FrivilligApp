@@ -15,7 +15,7 @@ namespace FrontendModels
         public double LocationY { get; set; }
         public int SkillsId { get; set; }
         public List<Skills> Skills { get; set; }
-        public int InterestsId {  get; set; }
+        public int InterestsId { get; set; }
         public List<Interests> interests { get; set; }
     }
 }

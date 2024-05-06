@@ -12,5 +12,17 @@ namespace H5MiniSvendeprøveS_M.Controllers
         {
             repo = new SkillsRepository();
         }
+        [HttpGet]
+        public async Task<IActionResult> GetSkillsAsync()
+        {
+            try
+            {
+                return Ok(await repo.GetSkillsAsync());
+            }
+            catch
+            {
+                return NotFound();
+            }
+        }
     }
 }

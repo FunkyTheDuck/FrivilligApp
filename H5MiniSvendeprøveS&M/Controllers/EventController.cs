@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ApiRepository;
 using FrontendModels;
+using Microsoft.Extensions.Logging;
 
 namespace H5MiniSvendeprøveS_M.Controllers
 {
@@ -16,27 +17,86 @@ namespace H5MiniSvendeprøveS_M.Controllers
         [HttpGet("{eventId}")]
         public async Task<IActionResult> GetOneEventAsync(int eventId)
         {
-            return Ok();
+            try
+            {
+                return Ok(await repo.GetOneEventAsync(eventId));
+            }
+            catch
+            {
+                return NotFound();
+            }
         }
         [HttpPut]
         public async Task<IActionResult> UpdateEventAsync(Event events)
         {
-            return Ok();
+            if (events != null) 
+            {
+                bool succes;
+                try
+                {
+                    succes = await repo.UpdateEventAsync(events);
+                }
+                catch
+                {
+                    return NotFound();
+                }
+                if (succes)
+                {
+                    return Ok();
+                }
+            }
+            return BadRequest();
         }
         [HttpDelete]
         public async Task<IActionResult> DeleteEventAsync(int eventId)
         {
-            return Ok();
+            bool succes = false;
+            try
+            {
+                succes = await repo.DeleteEventAsync(eventId);
+            }
+            catch
+            {
+                return NotFound();
+            }
+            if (succes)
+            {
+                return Ok();
+            }
+            return BadRequest();
         }
         [HttpPost]
         public async Task<IActionResult> CreateEventAsync(Event events)
         {
-            return Ok();
+            if (events != null)
+            {
+                bool succes;
+                try
+                {
+                    succes = await repo.UpdateEventAsync(events);
+                }
+                catch
+                {
+                    return NotFound();
+                }
+                if (succes)
+                {
+                    return Ok();
+                }
+            }
+            return BadRequest();
         }
         [HttpGet]
-        public async Task<IActionResult> GetFromUserInterests(int page, List<string> interests, string location)
+        public async Task<IActionResult> GetFromUserInterests(int page, List<string> interests, double locationX, double locationY)
         {
-            return Ok();
+            try
+            {
+                return Ok(await repo.GetFromUserInteretsAsync(page, interests, locationX, locationY));
+            }
+            catch
+            {
+                return NotFound();
+            }
         }
     }
 }

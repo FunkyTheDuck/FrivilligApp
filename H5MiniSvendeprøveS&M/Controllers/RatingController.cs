@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ApiRepository;
 using FrontendModels;
+using Microsoft.Extensions.Logging;
 
 namespace H5MiniSvendeprøveS_M.Controllers
 {
@@ -16,17 +17,53 @@ namespace H5MiniSvendeprøveS_M.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateRatingAsync(Ratings rating)
         {
-            return Ok();
+            if (rating != null)
+            {
+                bool succes;
+                try
+                {
+                    succes = await repo.CreateRatingAsync(rating);
+                }
+                catch
+                {
+                    return NotFound();
+                }
+                if (succes)
+                {
+                    return Ok();
+                }
+            }
+            return BadRequest();
         }
         [HttpDelete]
         public async Task<IActionResult> DeleteRatingAsync(int ratingId)
         {
-            return Ok();
+            bool succes = false;
+            try
+            {
+                succes = await repo.DeleteRatingAsync(ratingId);
+            }
+            catch
+            {
+                return NotFound();
+            }
+            if (succes)
+            {
+                return Ok();
+            }
+            return BadRequest();
         }
         [HttpGet]
-        public async Task<IActionResult> GetUsersRatingsAsync(int userId)
+        public async Task<IActionResult> GetUsersRatingAsync(int userId)
         {
-            return Ok();
+            try
+            {
+                return Ok(await repo.GetUsersRatingAsync(userId));
+            }
+            catch
+            {
+                return NotFound();
+            }
         }
     }
 }
