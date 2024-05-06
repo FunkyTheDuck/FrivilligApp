@@ -104,7 +104,7 @@ namespace ApiRepository
         public async Task<List<Event>> GetFromUserInteretsAsync(int page, List<string> interests, double locationX, double locationY)
         {
             List<DtoEvent> dtoEvents = new List<DtoEvent>();
-            List<Event> events = new List<Event>();
+            List<Event> eventList = new List<Event>();
             try
             {
                 dtoEvents = await db.Events.ToListAsync();
@@ -113,8 +113,35 @@ namespace ApiRepository
             {
                 return new List<Event>();
             }
+            foreach (DtoEvent dtoEvent in dtoEvents)
+            {
+                Event events = new Event
+                {
+                    Id = dtoEvent.Id,
+                    OwnerId = dtoEvent.OwnerId,
+                    VoluntaryId = dtoEvent.VoluntaryId,
+                    Title = dtoEvent.Title,
+                    Description = dtoEvent.Description,
+                    ImageUrl = dtoEvent.ImageUrl,
+                    WantedVolunteers = dtoEvent.WantedVolunteers,
+                    EventInfoId = dtoEvent.EventInfoId
+                };
+                double DistanceY = Math.Abs(dtoEvent.EventInfo.CoordinateY - locationY);
+                double DistanceX = Math.Abs(dtoEvent.EventInfo.CoordinateX - locationX);
+                if (DistanceY < 0)
+                {
+                    DistanceY *= -1;
+                }
+                if (DistanceX < 0)
+                {
+                    DistanceX *= -1;
+                }
+                events.EventInfo.Distance = DistanceY + DistanceX;
+                eventList.Add(events);
+            }
+            eventList.OrderBy(x => -x.EventInfo.Interests.Count(i => interests.Contains(i.Interest))).ThenBy(x => x.EventInfo.Distance).ToList();
 
-            return events;
+            return eventList.GetRange(page-1*10, 10);
         }
     }
 }

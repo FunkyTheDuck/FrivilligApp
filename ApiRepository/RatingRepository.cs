@@ -1,5 +1,7 @@
 ﻿using ApiDBlayer;
 using BackendModels;
+using FrontendModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,20 +17,60 @@ namespace ApiRepository
         {
             db = new Database();
         }
-        public async Task<bool> CreateRatingAsync(DtoRatings rating)
+        public async Task<bool> CreateRatingAsync(Ratings rating)
         {
+            DtoRatings ratings = new DtoRatings
+            {
+                Id = rating.Id,
+                SenderId = rating.SenderId,
+                ReceiverId = rating.ReceiverId,
+                Rating = rating.Rating,
+                Reason = rating.Reason,
+            };
+            await db.Ratings.AddAsync(ratings);
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
             return true;
         }
 
         public async Task<bool> DeleteRatingAsync(int ratingId)
         {
+            DtoRatings dtoRating = await db.Ratings.FirstOrDefaultAsync(e => e.Id == ratingId);
+            db.Ratings.Remove(dtoRating);
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
             return true;
         }
 
-        public async Task<List<DtoRatings>> GetUsersRatingAsync(int userId)
+        public async Task<List<Ratings>> GetUsersRatingAsync(int userId)
         {
-            List<DtoRatings> Rating = new List<DtoRatings>();
-            return Rating;
+            List<DtoRatings> DtoRating = await db.Ratings.Where(x => x.ReceiverId == userId).ToListAsync();
+            List<Ratings> ratings = new List<Ratings>();
+            foreach (DtoRatings dto in DtoRating) 
+            {
+                Ratings rating = new Ratings
+                {
+                    Id = dto.Id,
+                    SenderId = dto.SenderId,
+                    ReceiverId = dto.ReceiverId,
+                    Rating = dto.Rating,
+                    Reason = dto.Reason,
+                };
+                ratings.Add(rating);
+            }
+            return ratings;
         }
     }
 }

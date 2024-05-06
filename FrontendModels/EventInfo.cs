@@ -12,9 +12,13 @@ namespace FrontendModels
         public int Id {  get; set; }
         [MaxLength(100)]
         public string Address { get; set; }
+        public double CoordinateX { get; set; }
+        public double CoordinateY { get; set; }
         public int SkillsId { get; set; }
         public List<Skills> Skills { get; set; }
         public int InterestsId { get; set; }
         public List<Interests> Interests { get; set; }
+        public double Distance {  get; set; }     
+
     }
 }
