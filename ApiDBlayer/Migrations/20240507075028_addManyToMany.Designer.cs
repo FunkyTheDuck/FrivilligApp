@@ -3,6 +3,7 @@ using ApiDBlayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApiDBlayer.Migrations
 {
     [DbContext(typeof(Database))]
-    partial class DatabaseModelSnapshot : ModelSnapshot
+    [Migration("20240507075028_addManyToMany")]
+    partial class addManyToMany
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,7 +24,7 @@ namespace ApiDBlayer.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("DbModels.DtoEvent", b =>
+            modelBuilder.Entity("BackendModels.DtoEvent", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -63,7 +66,7 @@ namespace ApiDBlayer.Migrations
                     b.ToTable("Events");
                 });
 
-            modelBuilder.Entity("DbModels.DtoEventInfo", b =>
+            modelBuilder.Entity("BackendModels.DtoEventInfo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -87,7 +90,7 @@ namespace ApiDBlayer.Migrations
                     b.ToTable("EventsInfo");
                 });
 
-            modelBuilder.Entity("DbModels.DtoInterests", b =>
+            modelBuilder.Entity("BackendModels.DtoInterests", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -105,7 +108,7 @@ namespace ApiDBlayer.Migrations
                     b.ToTable("Interests");
                 });
 
-            modelBuilder.Entity("DbModels.DtoRatings", b =>
+            modelBuilder.Entity("BackendModels.DtoRatings", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -136,7 +139,7 @@ namespace ApiDBlayer.Migrations
                     b.ToTable("Ratings");
                 });
 
-            modelBuilder.Entity("DbModels.DtoSkills", b =>
+            modelBuilder.Entity("BackendModels.DtoSkills", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -154,7 +157,7 @@ namespace ApiDBlayer.Migrations
                     b.ToTable("Skills");
                 });
 
-            modelBuilder.Entity("DbModels.DtoUser", b =>
+            modelBuilder.Entity("BackendModels.DtoUser", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -188,7 +191,7 @@ namespace ApiDBlayer.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("DbModels.DtoUserCredentials", b =>
+            modelBuilder.Entity("BackendModels.DtoUserCredentials", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -205,7 +208,7 @@ namespace ApiDBlayer.Migrations
                     b.ToTable("UserCredentials");
                 });
 
-            modelBuilder.Entity("DbModels.DtoUserInfo", b =>
+            modelBuilder.Entity("BackendModels.DtoUserInfo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -300,9 +303,9 @@ namespace ApiDBlayer.Migrations
                     b.ToTable("DtoSkillsDtoUserInfo");
                 });
 
-            modelBuilder.Entity("DbModels.DtoEvent", b =>
+            modelBuilder.Entity("BackendModels.DtoEvent", b =>
                 {
-                    b.HasOne("DbModels.DtoEventInfo", "EventInfo")
+                    b.HasOne("BackendModels.DtoEventInfo", "EventInfo")
                         .WithMany()
                         .HasForeignKey("EventInfoId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -311,15 +314,15 @@ namespace ApiDBlayer.Migrations
                     b.Navigation("EventInfo");
                 });
 
-            modelBuilder.Entity("DbModels.DtoRatings", b =>
+            modelBuilder.Entity("BackendModels.DtoRatings", b =>
                 {
-                    b.HasOne("DbModels.DtoUser", "Receiver")
+                    b.HasOne("BackendModels.DtoUser", "Receiver")
                         .WithMany()
                         .HasForeignKey("ReceiverId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DbModels.DtoUser", "Sender")
+                    b.HasOne("BackendModels.DtoUser", "Sender")
                         .WithMany()
                         .HasForeignKey("SenderId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -330,15 +333,15 @@ namespace ApiDBlayer.Migrations
                     b.Navigation("Sender");
                 });
 
-            modelBuilder.Entity("DbModels.DtoUser", b =>
+            modelBuilder.Entity("BackendModels.DtoUser", b =>
                 {
-                    b.HasOne("DbModels.DtoUserCredentials", "UserCredebtials")
+                    b.HasOne("BackendModels.DtoUserCredentials", "UserCredebtials")
                         .WithMany()
                         .HasForeignKey("UserCredebtialsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DbModels.DtoUserInfo", "UserInfo")
+                    b.HasOne("BackendModels.DtoUserInfo", "UserInfo")
                         .WithMany()
                         .HasForeignKey("UserInfoId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -351,13 +354,13 @@ namespace ApiDBlayer.Migrations
 
             modelBuilder.Entity("DtoEventDtoUser", b =>
                 {
-                    b.HasOne("DbModels.DtoEvent", null)
+                    b.HasOne("BackendModels.DtoEvent", null)
                         .WithMany()
                         .HasForeignKey("EventsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DbModels.DtoUser", null)
+                    b.HasOne("BackendModels.DtoUser", null)
                         .WithMany()
                         .HasForeignKey("VolunteersId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -366,13 +369,13 @@ namespace ApiDBlayer.Migrations
 
             modelBuilder.Entity("DtoEventInfoDtoInterests", b =>
                 {
-                    b.HasOne("DbModels.DtoEventInfo", null)
+                    b.HasOne("BackendModels.DtoEventInfo", null)
                         .WithMany()
                         .HasForeignKey("EventInfoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DbModels.DtoInterests", null)
+                    b.HasOne("BackendModels.DtoInterests", null)
                         .WithMany()
                         .HasForeignKey("InterestsId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -381,13 +384,13 @@ namespace ApiDBlayer.Migrations
 
             modelBuilder.Entity("DtoEventInfoDtoSkills", b =>
                 {
-                    b.HasOne("DbModels.DtoEventInfo", null)
+                    b.HasOne("BackendModels.DtoEventInfo", null)
                         .WithMany()
                         .HasForeignKey("EventInfoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DbModels.DtoSkills", null)
+                    b.HasOne("BackendModels.DtoSkills", null)
                         .WithMany()
                         .HasForeignKey("SkillsId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -396,13 +399,13 @@ namespace ApiDBlayer.Migrations
 
             modelBuilder.Entity("DtoInterestsDtoUserInfo", b =>
                 {
-                    b.HasOne("DbModels.DtoInterests", null)
+                    b.HasOne("BackendModels.DtoInterests", null)
                         .WithMany()
                         .HasForeignKey("InterestsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DbModels.DtoUserInfo", null)
+                    b.HasOne("BackendModels.DtoUserInfo", null)
                         .WithMany()
                         .HasForeignKey("UserInfoId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -411,13 +414,13 @@ namespace ApiDBlayer.Migrations
 
             modelBuilder.Entity("DtoSkillsDtoUserInfo", b =>
                 {
-                    b.HasOne("DbModels.DtoSkills", null)
+                    b.HasOne("BackendModels.DtoSkills", null)
                         .WithMany()
                         .HasForeignKey("SkillsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DbModels.DtoUserInfo", null)
+                    b.HasOne("BackendModels.DtoUserInfo", null)
                         .WithMany()
                         .HasForeignKey("UserInfoId")
                         .OnDelete(DeleteBehavior.Cascade)

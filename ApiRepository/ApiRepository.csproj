@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ApiDBlayer\ApiDBlayer.csproj" />
-    <ProjectReference Include="..\BackendModels\BackendModels.csproj" />
+    <ProjectReference Include="..\DbModels\DbModels.csproj" />
     <ProjectReference Include="..\FrontendModels\FrontendModels.csproj" />
   </ItemGroup>
 

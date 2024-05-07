@@ -5,11 +5,11 @@ VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "H5MiniSvendeprøveS&M\WebAPI.csproj", "{43D8C4FE-FA61-4AC0-9169-F5D21DDFEF1C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MauiApp", "FrivilligApp\MauiApp.csproj", "{C04E3F15-09DC-4040-B0C3-B295FDA54091}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MauiApp", "FrivilligApp\MauiApp.csproj", "{C04E3F15-09DC-4040-B0C3-B295FDA54091}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorWebsite", "FrivilligHjemmeside\BlazorWebsite.csproj", "{8F937AD2-0027-48E1-8698-03AA6BB4C5BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorWebsite", "FrivilligHjemmeside\BlazorWebsite.csproj", "{8F937AD2-0027-48E1-8698-03AA6BB4C5BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackendModels", "BackendModels\BackendModels.csproj", "{FE91079E-2673-489D-A98F-FAF49C7D7A57}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BackendModels", "BackendModels\BackendModels.csproj", "{FE91079E-2673-489D-A98F-FAF49C7D7A57}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BlazorWeb", "BlazorWeb", "{2BCB4462-0EC1-434F-AB6E-A900D4245D95}"
 EndProject
@@ -19,19 +19,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{7B217216-1DE
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Models", "Models", "{8A41B830-6152-4EBE-826A-90220612AEA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontendModels", "FrontendModels\FrontendModels.csproj", "{B53F5002-1B53-4047-9B42-392416AB8D01}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrontendModels", "FrontendModels\FrontendModels.csproj", "{B53F5002-1B53-4047-9B42-392416AB8D01}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiRepository", "ApiRepository\ApiRepository.csproj", "{D490090B-7D52-49D5-84C9-99D1600C7D24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiRepository", "ApiRepository\ApiRepository.csproj", "{D490090B-7D52-49D5-84C9-99D1600C7D24}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiDBlayer", "ApiDBlayer\ApiDBlayer.csproj", "{B0D2EB61-EE10-4EA2-92DD-F6B1D377ADC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiDBlayer", "ApiDBlayer\ApiDBlayer.csproj", "{B0D2EB61-EE10-4EA2-92DD-F6B1D377ADC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorRepository", "BlazorRepo\BlazorRepository.csproj", "{7EAF6314-A4E3-466D-9CC8-62773FBBF96E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorRepository", "BlazorRepo\BlazorRepository.csproj", "{7EAF6314-A4E3-466D-9CC8-62773FBBF96E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorDBlayer", "BlazorDBlayer\BlazorDBlayer.csproj", "{485DE9E6-AEBB-4D29-887A-677544F2F72A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorDBlayer", "BlazorDBlayer\BlazorDBlayer.csproj", "{485DE9E6-AEBB-4D29-887A-677544F2F72A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MauiRepository", "MauiRepository\MauiRepository.csproj", "{892A2B4C-57D1-4CBE-8ACC-6C7D1A73805A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MauiRepository", "MauiRepository\MauiRepository.csproj", "{892A2B4C-57D1-4CBE-8ACC-6C7D1A73805A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MauiDBlayer", "MauiDBlayer\MauiDBlayer.csproj", "{B2067A42-1BD9-42FB-B2F8-66028565C55C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MauiDBlayer", "MauiDBlayer\MauiDBlayer.csproj", "{B2067A42-1BD9-42FB-B2F8-66028565C55C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbModels", "DbModels\DbModels.csproj", "{0AEDDE51-C45F-43BB-A237-782B6008FCE8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -85,6 +87,10 @@ Global
 		{B2067A42-1BD9-42FB-B2F8-66028565C55C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2067A42-1BD9-42FB-B2F8-66028565C55C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2067A42-1BD9-42FB-B2F8-66028565C55C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AEDDE51-C45F-43BB-A237-782B6008FCE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AEDDE51-C45F-43BB-A237-782B6008FCE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AEDDE51-C45F-43BB-A237-782B6008FCE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AEDDE51-C45F-43BB-A237-782B6008FCE8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -101,6 +107,7 @@ Global
 		{485DE9E6-AEBB-4D29-887A-677544F2F72A} = {2BCB4462-0EC1-434F-AB6E-A900D4245D95}
 		{892A2B4C-57D1-4CBE-8ACC-6C7D1A73805A} = {48D09BE2-ACEE-4A61-8E3A-465A1C7A9FF7}
 		{B2067A42-1BD9-42FB-B2F8-66028565C55C} = {48D09BE2-ACEE-4A61-8E3A-465A1C7A9FF7}
+		{0AEDDE51-C45F-43BB-A237-782B6008FCE8} = {8A41B830-6152-4EBE-826A-90220612AEA4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E40AE6C8-90E1-4A58-8A16-ED07A337F8B1}

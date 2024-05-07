@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BackendModels;
+using DbModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApiDBlayer
@@ -26,6 +26,11 @@ namespace ApiDBlayer
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<DtoRatings>().HasOne(x => x.Sender).WithMany().HasForeignKey(x => x.SenderId).OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<DtoUserInfo>().HasMany(x => x.Skills).WithMany(x => x.UserInfo);
+            modelBuilder.Entity<DtoUserInfo>().HasMany(x => x.Interests).WithMany(x => x.UserInfo);
+            modelBuilder.Entity<DtoEventInfo>().HasMany(x => x.Skills).WithMany(x => x.EventInfo);
+            modelBuilder.Entity<DtoEventInfo>().HasMany(x => x.Interests).WithMany(x => x.EventInfo);
         }
     }
 }

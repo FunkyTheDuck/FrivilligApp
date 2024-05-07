@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BackendModels
+namespace DbModels
 {
-    public class DtoInterests
+    public class DtoSkills
     {
-        public int Id { get; set; }
+        public int Id {  get; set; }
         [MaxLength(30)]
-        public string Interest {  get; set; }
+        public string Skill {  get; set; }
         public List<DtoUserInfo> UserInfo { get; set; }
         public List<DtoEventInfo> EventInfo { get; set; }
     }
