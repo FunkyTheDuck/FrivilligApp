@@ -12,7 +12,7 @@ namespace DbModels
         public int Id {  get; set; }
         [MaxLength(30)]
         public string Skill {  get; set; }
-        public List<DtoUserInfo> UserInfo { get; set; }
-        public List<DtoEventInfo> EventInfo { get; set; }
+        public List<DtoUserInfo>? UserInfo { get; set; }
+        public List<DtoEventInfo>? EventInfo { get; set; }
     }
 }

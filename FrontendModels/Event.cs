@@ -13,13 +13,13 @@ namespace FrontendModels
         public int OwnerId { get; set; }
         public User Owner { get; set; }
         public int VoluntaryId { get; set; }
-        public List<User> Volunteers { get; set; }
+        public List<User>? Volunteers { get; set; }
         [MaxLength(50)]
         public string Title { get; set; }
         [MaxLength(500)]
         public string Description { get; set; }
         [MaxLength(101)]
-        public string ImageUrl { get; set; }
+        public string? ImageUrl { get; set; }
         public int WantedVolunteers { get; set; }
         public int EventInfoId { get; set; }
         public EventInfo EventInfo { get; set; }

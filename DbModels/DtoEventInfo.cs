@@ -14,7 +14,7 @@ namespace DbModels
         public string Address { get; set; }
         public double CoordinateX { get; set; }
         public double CoordinateY { get; set; }
-        public List<DtoSkills> Skills { get; set; }
-        public List<DtoInterests> Interests { get; set; }
+        public List<DtoSkills>? Skills { get; set; }
+        public List<DtoInterests>? Interests { get; set; }
     }
 }

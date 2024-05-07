@@ -13,7 +13,7 @@ namespace DbModels
         [MaxLength(50)]
         public double LocationX { get; set; }
         public double LocationY { get; set; }
-        public List<DtoSkills> Skills { get; set; }
-        public List<DtoInterests> Interests { get; set; }
+        public List<DtoSkills>? Skills { get; set; }
+        public List<DtoInterests>? Interests { get; set; }
     }
 }
