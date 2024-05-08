@@ -20,7 +20,7 @@ namespace ApiRepository
         }
         public async Task<User> LogUserInAsync(string username, string hashedPassword)
         {
-            DtoUser DtoUser = await db.Users.FirstOrDefaultAsync(x => x.Username == username);
+            DtoUser DtoUser = await db.Users.Include(x => x.UserCredebtials).FirstOrDefaultAsync(x => x.Username == username);
             User user;
             if (DtoUser.UserCredebtials.Password == hashedPassword)
             {
@@ -43,23 +43,28 @@ namespace ApiRepository
 
         public async Task<bool> CreateUserAsync(User user)
         {
-            DtoUser dtoUser = new DtoUser
+            if (user != null)
             {
-                Id = user.Id,
-                EventId = user.EventId,
-                IsVoluntary = user.IsVoluntary,
-                Username = user.Username,
-                UserCredebtialsId = user.UserCredebtialsId,
-                UserInfoId = user.UserInfoId,
-            };
-            await db.Users.AddAsync(dtoUser);
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (Exception)
-            {
-                return false;
+                DtoUser dtoUser = new DtoUser
+                {
+                    Id = user.Id,
+                    EventId = user.EventId,
+                    IsVoluntary = user.IsVoluntary,
+                    Username = user.Username,
+                    UserCredebtialsId = user.UserCredebtialsId,
+                    UserCredebtials = new DtoUserCredentials { Password = user.UserCredebtials.Password},
+                    UserInfoId = user.UserInfoId,
+                    UserInfo = new DtoUserInfo { LocationX = user.UserInfo.LocationX, LocationY = user.UserInfo.LocationY}
+                };
+                await db.Users.AddAsync(dtoUser);
+                try
+                {
+                    await db.SaveChangesAsync();
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
             }
             return true;
         }
@@ -88,7 +93,9 @@ namespace ApiRepository
                 IsVoluntary = user.IsVoluntary,
                 Username = user.Username,
                 UserCredebtialsId = user.UserCredebtialsId,
+                UserCredebtials = new DtoUserCredentials { Password = user.UserCredebtials.Password },
                 UserInfoId = user.UserInfoId,
+                UserInfo = new DtoUserInfo { LocationX = user.UserInfo.LocationX, LocationY = user.UserInfo.LocationY }
             };
             db.Users.Update(dtoUser);
             try

@@ -21,7 +21,7 @@ namespace ApiRepository
         public async Task<Event> GetOneEventAsync(int eventId)
         {
             DtoEvent dtoEvent = new DtoEvent();
-            dtoEvent = await db.Events.FirstOrDefaultAsync(x => x.Id == eventId);
+            dtoEvent = await db.Events.Include(x => x.EventInfo).FirstOrDefaultAsync(x => x.Id == eventId);
             Event events = new Event
             {
                 Id = dtoEvent.Id,
@@ -31,7 +31,7 @@ namespace ApiRepository
                 Description = dtoEvent.Description,
                 ImageUrl = dtoEvent.ImageUrl,
                 WantedVolunteers = dtoEvent.WantedVolunteers,
-                EventInfoId = dtoEvent.EventInfoId
+                EventInfoId = dtoEvent.EventInfoId,
             };
             return events;
         }
@@ -47,7 +47,8 @@ namespace ApiRepository
                 Description = events.Description,
                 ImageUrl = events.ImageUrl,
                 WantedVolunteers = events.WantedVolunteers,
-                EventInfoId = events.EventInfoId
+                EventInfoId = events.EventInfoId,
+                EventInfo = new DtoEventInfo {Address = events.EventInfo.Address, CoordinateX = events.EventInfo.CoordinateX, CoordinateY = events.EventInfo.CoordinateY }
             };
             db.Events.Update(dtoEvent);
             try
@@ -87,7 +88,8 @@ namespace ApiRepository
                 Description = events.Description,
                 ImageUrl = events.ImageUrl,
                 WantedVolunteers = events.WantedVolunteers,
-                EventInfoId = events.EventInfoId
+                EventInfoId = events.EventInfoId,
+                EventInfo = new DtoEventInfo { Address = events.EventInfo.Address, CoordinateX = events.EventInfo.CoordinateX, CoordinateY = events.EventInfo.CoordinateY }
             };
             await db.Events.AddAsync(dtoEvent);
             try

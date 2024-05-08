@@ -29,21 +29,18 @@ namespace H5MiniSvendeprøveS_M.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateUserAsync(User user)
         {
-            if (user != null)
+            bool succes;
+            try
             {
-                bool succes;
-                try
-                {
-                    succes = await repo.CreateUserAsync(user);
-                }
-                catch
-                {
-                    return NotFound();
-                }
-                if (succes)
-                {
-                    return Ok();
-                }
+                succes = await repo.CreateUserAsync(user);
+            }
+            catch
+            {
+                return NotFound();
+            }
+            if (succes)
+            {
+                return Ok();
             }
             return BadRequest();
         }
@@ -73,7 +70,7 @@ namespace H5MiniSvendeprøveS_M.Controllers
                 bool succes;
                 try
                 {
-                    succes = await repo.CreateUserAsync(user);
+                    succes = await repo.UpdateUserAsync(user);
                 }
                 catch
                 {

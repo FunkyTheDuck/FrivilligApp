@@ -11,7 +11,7 @@ namespace FrontendModels
     {
         public int Id { get; set; }
         public int OwnerId { get; set; }
-        public User Owner { get; set; }
+        public User? Owner { get; set; }
         public int VoluntaryId { get; set; }
         public List<User>? Volunteers { get; set; }
         [MaxLength(50)]
