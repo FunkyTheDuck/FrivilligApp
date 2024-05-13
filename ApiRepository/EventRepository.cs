@@ -23,7 +23,7 @@ namespace ApiRepository
         public async Task<Event> GetOneEventAsync(int eventId)
         {
             DtoEvent dtoEvent = new DtoEvent();
-            dtoEvent = await db.Events.Include(x => x.EventInfo).FirstOrDefaultAsync(x => x.Id == eventId);
+            dtoEvent = await db.Events.Include(x => x.EventInfo).ThenInclude(x => x.Skills).FirstOrDefaultAsync(x => x.Id == eventId);
             Event events = new Event
             {
                 Id = dtoEvent.Id,
@@ -76,6 +76,34 @@ namespace ApiRepository
                 return false;
             }
             return true;
+        }
+        public async Task AddSkillToEventAsync(int eventId, int skillId)
+        {
+            var eventInfo = await db.EventsInfo.FindAsync(eventId);
+            var skill = await db.Skills.FindAsync(skillId);
+
+            if (eventInfo != null && skill != null)
+            {
+                eventInfo.Skills ??= new List<DtoSkills>();
+                eventInfo.Skills.Add(skill);
+                db.Attach(eventInfo);
+                await db.SaveChangesAsync();
+            }
+        }
+        public async Task RemoveSkillFromEventAsync(int eventId, int skillId)
+        {
+            var eventInfo = await db.EventsInfo.Include(e => e.Skills).FirstOrDefaultAsync(e => e.Id == eventId);
+
+            if (eventInfo != null)
+            {
+                var skillToRemove = eventInfo.Skills?.FirstOrDefault(s => s.Id == skillId);
+                if (skillToRemove != null)
+                {
+                    eventInfo.Skills.Remove(skillToRemove);
+                    db.Attach(eventInfo);
+                    await db.SaveChangesAsync();
+                }
+            }
         }
 
         public async Task<bool> DeleteEventAsync(int eventId)

@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MauiRepository", "MauiRepos
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MauiDBlayer", "MauiDBlayer\MauiDBlayer.csproj", "{B2067A42-1BD9-42FB-B2F8-66028565C55C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbModels", "DbModels\DbModels.csproj", "{0AEDDE51-C45F-43BB-A237-782B6008FCE8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbModels", "DbModels\DbModels.csproj", "{0AEDDE51-C45F-43BB-A237-782B6008FCE8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

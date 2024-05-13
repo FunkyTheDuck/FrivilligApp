@@ -1,0 +1,21 @@
+﻿@page "/CreateEvent"
+@rendermode InteractiveServer
+<PageTitle>Opret begivenhed</PageTitle>
+
+<div class="container">
+    <div class="header">
+        <h2>Opret begivenhed</h2>
+    </div>
+    @if (CreatedEvent != null)
+    {
+        <div class="inputs">
+            <input class="input" placeholder="Begivenhedens navn" @bind="CreatedEvent.Title" />
+            <input class="input" placeholder="Beskrivelse" @bind="CreatedEvent.Description" />
+            <input class="input" placeholder="Billede url" @bind="CreatedEvent.ImageUrl" />
+            <input class="input" placeholder="begivenhedens addresse" @bind="CreatedEvent.EventInfo.Address" />
+        </div>
+        <div class="buttons">
+            <button class="button" @onclick="HandleValidSubmit">Opret begivenhed</button>
+        </div>
+    }
+</div>
