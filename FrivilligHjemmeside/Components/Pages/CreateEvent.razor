@@ -1,5 +1,23 @@
-﻿<h3>CreateEvent</h3>
+﻿@page "/CreateEvent"
 
-@code {
+<div class="container">
+    <div class="header">
+        <h2>Opret begivenhed</h2>
+    </div>
+    @if(CreatedEvent != null)
+    {
+        @if(CreatedEvent.EventInfo != null)
+        {
+            <h2>Inputs</h2>
 
-}
+            <EditForm Model="@CreatedEvent" OnValidSubmit="HandleValidSubmit">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+                <InputText class="input" placeholder="Begivenhedens navn" @bind="CreatedEvent.Title" />
+                <InputText class="input" placeholder="Beskrivelse" @bind="CreatedEvent.Description" />
+                <InputText class="input" placeholder="Billede url" @bind="CreatedEvent.ImageUrl" />
+                <InputText class="input" placeholder="begivenhedens addresse" @bind="CreatedEvent.EventInfo.Address" />
+            </EditForm>
+        }
+    }
+</div>

@@ -7,14 +7,17 @@ namespace BlazorWebsite.Components.Pages
     {
         EventRepository repo { get; set; }
         public Event CreatedEvent { get; set; }
-        protected async void OnAfterRenderAsync(bool firstRender)
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if(firstRender)
             {
+                CreatedEvent = new Event();
+                CreatedEvent.EventInfo = new EventInfo();
                 repo = new EventRepository();
+                StateHasChanged();
             }
         }
-        public async void CreateEventAsync()
+        public async Task HandleValidSubmit()
         {
             bool checkIfSucces;
             try
