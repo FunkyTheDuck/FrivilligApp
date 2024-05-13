@@ -10,9 +10,5 @@ namespace BlazorWebsite.Components.Pages
                 StateHasChanged();
             }
         }
-        public async Task TestClick()
-        {
-
-        }
     }
 }

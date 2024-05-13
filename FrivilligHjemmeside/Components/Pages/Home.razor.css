@@ -1,0 +1,9 @@
+﻿body {
+    background-color: red;
+}
+.header-text {
+    color: red;
+}
+#header-text {
+    color: purple;
+}
