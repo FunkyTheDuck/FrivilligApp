@@ -40,7 +40,8 @@ namespace ApiRepository
 
         public async Task<bool> UpdateEventAsync(Event events)
         {
-            DtoEvent dtoEvent = new DtoEvent
+            DtoEvent dtoEvent = await db.Events.Include(x => x.EventInfo).ThenInclude(x => x.Skills).FirstOrDefaultAsync(x => x.Id == events.Id);
+            dtoEvent = new DtoEvent
             {
                 Id = events.Id,
                 OwnerId = events.OwnerId,
@@ -50,8 +51,21 @@ namespace ApiRepository
                 ImageUrl = events.ImageUrl,
                 WantedVolunteers = events.WantedVolunteers,
                 EventInfoId = events.EventInfoId,
-                EventInfo = new DtoEventInfo {Address = events.EventInfo.Address, CoordinateX = events.EventInfo.CoordinateX, CoordinateY = events.EventInfo.CoordinateY }
+                EventInfo = new DtoEventInfo {Id = events.EventInfoId, Address = events.EventInfo.Address, CoordinateX = events.EventInfo.CoordinateX, CoordinateY = events.EventInfo.CoordinateY, Skills = new List<DtoSkills>(), Interests = new List<DtoInterests>() }
             };
+            for (int i = 0; i < dtoEvent.EventInfo.Skills.Count; i++)
+            {
+                await RemoveSkillFromEventAsync(dtoEvent.EventInfoId, events.EventInfo.Skills[i].Id);
+            }
+            for (int i = 0; i < events.EventInfo.Skills.Count; i++)
+            {
+                await AddSkillToEventAsync(dtoEvent.EventInfoId, events.EventInfo.Skills[i].Id);
+            }
+
+            for (int i = 0; i < events.EventInfo.Interests.Count; i++)
+            {
+                dtoEvent.EventInfo.Interests.Add(new DtoInterests { Id = events.EventInfo.Interests[i].Id, Interest = events.EventInfo.Interests[i].Interest });
+            }
             db.Events.Update(dtoEvent);
             try
             {
@@ -119,7 +133,7 @@ namespace ApiRepository
                 ImageUrl = events.ImageUrl,
                 WantedVolunteers = events.WantedVolunteers,
                 EventInfoId = events.EventInfoId,
-                EventInfo = new DtoEventInfo { Address = events.EventInfo.Address, CoordinateX = events.EventInfo.CoordinateX, CoordinateY = events.EventInfo.CoordinateY }
+                EventInfo = new DtoEventInfo {Id = events.EventInfoId, Address = events.EventInfo.Address, CoordinateX = events.EventInfo.CoordinateX, CoordinateY = events.EventInfo.CoordinateY }
             };
             await db.Events.AddAsync(dtoEvent);
             try
@@ -174,6 +188,35 @@ namespace ApiRepository
             eventList.OrderBy(x => -x.EventInfo.Interests.Count(i => interests.Contains(i.Interest))).ThenBy(x => x.EventInfo.Distance).ToList();
 
             return eventList.GetRange(page-1*10, 10);
+        }
+        public async Task AddSkillToEventAsync(int eventId, int skillId)
+        {
+            var eventInfo = await db.EventsInfo.FindAsync(eventId);
+            var skill = await db.Skills.FindAsync(skillId);
+
+            if (eventInfo != null && skill != null)
+            {
+                eventInfo.Skills ??= new List<DtoSkills>();
+                eventInfo.Skills.Add(skill);
+                db.Attach(eventInfo);
+                await db.SaveChangesAsync();
+            }
+        }
+
+        public async Task RemoveSkillFromEventAsync(int eventId, int skillId)
+        {
+            var eventInfo = await db.EventsInfo.Include(e => e.Skills).FirstOrDefaultAsync(e => e.Id == eventId);
+
+            if (eventInfo != null)
+            {
+                var skillToRemove = eventInfo.Skills?.FirstOrDefault(s => s.Id == skillId);
+                if (skillToRemove != null)
+                {
+                    eventInfo.Skills.Remove(skillToRemove);
+                    db.Attach(eventInfo);
+                    await db.SaveChangesAsync();
+                }
+            }
         }
     }
 }

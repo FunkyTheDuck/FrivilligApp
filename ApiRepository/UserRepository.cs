@@ -52,9 +52,9 @@ namespace ApiRepository
                     IsVoluntary = user.IsVoluntary,
                     Username = user.Username,
                     UserCredebtialsId = user.UserCredebtialsId,
-                    UserCredebtials = new DtoUserCredentials { Password = user.UserCredebtials.Password},
+                    UserCredebtials = new DtoUserCredentials { Id = user.UserCredebtialsId, Password = user.UserCredebtials.Password},
                     UserInfoId = user.UserInfoId,
-                    UserInfo = new DtoUserInfo { LocationX = user.UserInfo.LocationX, LocationY = user.UserInfo.LocationY}
+                    UserInfo = new DtoUserInfo {Id = user.UserInfoId, LocationX = user.UserInfo.LocationX, LocationY = user.UserInfo.LocationY}
                 };
                 await db.Users.AddAsync(dtoUser);
                 try
@@ -93,9 +93,9 @@ namespace ApiRepository
                 IsVoluntary = user.IsVoluntary,
                 Username = user.Username,
                 UserCredebtialsId = user.UserCredebtialsId,
-                UserCredebtials = new DtoUserCredentials { Password = user.UserCredebtials.Password },
+                UserCredebtials = new DtoUserCredentials {Id = user.UserCredebtialsId, Password = user.UserCredebtials.Password },
                 UserInfoId = user.UserInfoId,
-                UserInfo = new DtoUserInfo { LocationX = user.UserInfo.LocationX, LocationY = user.UserInfo.LocationY }
+                UserInfo = new DtoUserInfo {Id = user.UserInfoId, LocationX = user.UserInfo.LocationX, LocationY = user.UserInfo.LocationY }
             };
             db.Users.Update(dtoUser);
             try
