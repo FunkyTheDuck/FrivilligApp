@@ -1,0 +1,41 @@
+﻿body {
+}
+.container {
+    margin-top: 10vh;
+}
+.background {
+    display: flex;
+    flex-direction: column;
+    background-color: #2562FF;
+    align-items: center;
+}
+.header {
+    justify-content: center;
+}
+.header-text {
+    color: white;
+    font-size: 28px;
+}
+.inputs {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.input {
+    width: 80%;
+    border-radius: 10px;
+    border: 0px;
+    margin-bottom: 10px;
+}
+.buttons {
+    margin-top: 2%;
+    display: flex;
+    justify-content: right;
+}
+.button {
+    border: 0px;
+    border-radius: 10px;
+    background-color: #2562FF;
+    color: white;
+}
