@@ -39,3 +39,48 @@
     background-color: #2562FF;
     color: white;
 }
+.skills-interests {
+    display: flex;
+    width: 80%;
+    justify-content: space-between;
+    color: white;
+}
+.skills-container {
+
+}
+.interests-container {
+
+}
+.skills-interests-header {
+    width: 60vh;
+}
+.skills-interests-inputs {
+    display: flex;
+    flex-wrap: wrap;
+}
+.skills-interests-input {
+    display: flex;
+    flex-direction: row;
+}
+.interests-only-inputs {
+    justify-content: flex-end;
+}
+.skills-interests-checkbox {
+    height: 25px;
+    width: 25px;
+    margin-left: 10px;
+    margin-right: 5px;
+}
+.skills-interests-name {
+}
+.skills-interests-space {
+    width: 5%;
+}
+@media all and (max-width: 1200px) {
+    .skills-interests {
+        flex-direction: column;
+    }
+    .interests-only-inputs {
+        justify-content: flex-start;
+    }
+}
