@@ -17,6 +17,20 @@ namespace BlazorDBlayer
         }
         #region EventCRUD
 
+        public async Task<List<DtoEvent>> GetAllEventsAsync(int page, double x, double y)
+        {
+            HttpResponseMessage response;
+            try
+            {
+                response = await httpClient.GetAsync("Event");
+            }
+            catch
+            {
+
+            }
+            return null;
+        }
+
         public async Task<bool> CreateEventAsync(DtoEvent dtoEvent)
         {
             if(dtoEvent != null)

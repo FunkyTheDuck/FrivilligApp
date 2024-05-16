@@ -135,11 +135,46 @@ namespace ApiRepository
                 EventInfoId = events.EventInfoId,
                 EventInfo = new DtoEventInfo {Id = events.EventInfoId, Address = events.EventInfo.Address, CoordinateX = events.EventInfo.CoordinateX, CoordinateY = events.EventInfo.CoordinateY }
             };
+            
             await db.Events.AddAsync(dtoEvent);
+
             try
             {
                 await db.SaveChangesAsync();
             }
+            catch (Exception)
+            {
+                return false;
+            }
+            dtoEvent = await db.Events.FirstOrDefaultAsync(x => x.Title == dtoEvent.Title);
+            if (events.EventInfo.Skills != null)
+            {
+                foreach (Skills skill in events.EventInfo.Skills)
+                {
+                    DtoEventInfoSkills infoSkills = new DtoEventInfoSkills
+                    {
+                        EventInfoId = dtoEvent.EventInfoId,
+                        SkillsId = skill.Id
+                    };
+                    await db.EventInfoSkills.AddAsync(infoSkills);
+                }
+            }
+            if (events.EventInfo.Interests != null)
+            {
+                foreach (Interests interests in events.EventInfo.Interests)
+                {
+                    DtoEventInfoInterests infoInterests = new DtoEventInfoInterests
+                    {
+                        EventInfoId = dtoEvent.EventInfoId,
+                        InterestsId = interests.Id
+                    };
+                    await db.EventInfoInterests.AddAsync(infoInterests);
+                }
+            }
+            try
+            {
+                await db.SaveChangesAsync();
+             }
             catch (Exception)
             {
                 return false;

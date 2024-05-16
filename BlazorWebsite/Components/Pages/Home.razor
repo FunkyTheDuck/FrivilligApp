@@ -3,4 +3,21 @@
 
 <PageTitle>Home</PageTitle>
 
-<h2>Temp test</h2>
+<div class="container">
+    <h2 class="header-text">Begivenheder nær dig</h2>
+    @if (Events != null)
+    {
+        @foreach (Event e in Events)
+        {
+            <div class="event-container">
+                <img class="event-image" src="@e.ImageUrl" />
+                <h2 class="event-title">@e.Title</h2>
+                <p class="event-description">@e.Description</p>
+                <div class="event-info">
+                    <p class="event-distance">@(e.EventInfo.Distance) Kilometer fra dig</p>
+                    <p class="event-address">@e.EventInfo.Address</p>
+                </div>
+            </div>
+        }
+    }
+</div>

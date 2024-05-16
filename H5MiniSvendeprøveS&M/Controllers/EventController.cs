@@ -73,7 +73,7 @@ namespace H5MiniSvendeprøveS_M.Controllers
                 bool succes;
                 try
                 {
-                    succes = await repo.UpdateEventAsync(events);
+                    succes = await repo.CreateEventAsync(events);
                 }
                 catch
                 {

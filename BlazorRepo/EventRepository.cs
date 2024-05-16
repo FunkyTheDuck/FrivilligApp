@@ -16,6 +16,20 @@ namespace BlazorRepository
         {
             db = new DBAccess();
         }
+        public async Task<List<Event>> GetAllEventsAsync(int page, double x, double y)
+        {
+            List<DtoEvent> dtoEvents;
+            try
+            {
+                dtoEvents = await db.GetAllEventsAsync(page, x, y);
+            }
+            catch
+            {
+                return null;
+            }
+            return null;
+
+        }
         public async Task<bool> CreateAsync(Event events)
         {
             if(events != null)
