@@ -3,8 +3,23 @@
 
 <PageTitle>Home</PageTitle>
 
+@if (succesHappend)
+{
+    <div class="alert alert-success" role="alert">
+        @message
+    </div>
+}
+@if (errorHappend)
+{
+    <div class="alert alert-danger" role="alert">
+        @message
+    </div>
+}
+
 <div class="container">
-    <h2 class="header-text">Begivenheder nær dig</h2>
+    <div class="header">
+        <h2 class="header-text">Begivenheder nær dig</h2>
+    </div>
     @if (Events != null)
     {
         @foreach (Event e in Events)
@@ -13,9 +28,15 @@
                 <img class="event-image" src="@e.ImageUrl" />
                 <h2 class="event-title">@e.Title</h2>
                 <p class="event-description">@e.Description</p>
-                <div class="event-info">
-                    <p class="event-distance">@(e.EventInfo.Distance) Kilometer fra dig</p>
-                    <p class="event-address">@e.EventInfo.Address</p>
+                <div class="event-footer">
+                    <div class="event-info">
+                        <p class="event-distance">@(e.EventInfo.Distance) Kilometer fra dig</p>
+                        <p class="event-distance">   -   </p>
+                        <p class="event-address">@e.EventInfo.Address</p>
+                    </div>
+                    <div class="buttons">
+                        <button class="button" @onclick="() => MeldBrugerTilAsync(e.Id)">Meld dig til</button>
+                    </div>
                 </div>
             </div>
         }

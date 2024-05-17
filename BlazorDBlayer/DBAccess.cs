@@ -17,16 +17,33 @@ namespace BlazorDBlayer
         }
         #region EventCRUD
 
-        public async Task<List<DtoEvent>> GetAllEventsAsync(int page, double x, double y)
+        public async Task<List<DtoEvent>> GetAllEventsAsync(int page, int userId, double x, double y)
         {
             HttpResponseMessage response;
             try
             {
-                response = await httpClient.GetAsync("Event");
+                response = await httpClient.GetAsync($"Event?page={page}&userId={userId}&locationX={x}&locationY={y}");
             }
             catch
             {
-
+                return null;
+            }
+            if(response.IsSuccessStatusCode)
+            {
+                List<DtoEvent> events;
+                try
+                {
+                    string json = await response.Content.ReadAsStringAsync();
+                    events = JsonConvert.DeserializeObject<List<DtoEvent>>(json);
+                }
+                catch
+                {
+                    return null;
+                }
+                if(events != null && events.Count != 0)
+                {
+                    return events;
+                }
             }
             return null;
         }
@@ -51,6 +68,23 @@ namespace BlazorDBlayer
             return false;
         }
 
+        public async Task<bool> AddVoluntaryToEvent(int userId, int eventId)
+        {
+            if(userId != 0 && eventId != 0)
+            {
+                HttpResponseMessage response;
+                try
+                {
+                    response = await httpClient.GetAsync($"Event/AddVoluntary?userId={userId}&eventId={eventId}");
+                }
+                catch
+                {
+                    return false;
+                }
+                return response.IsSuccessStatusCode;
+            }
+            return false;
+        }
         #endregion
 
 
