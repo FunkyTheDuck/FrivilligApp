@@ -2,6 +2,9 @@
 @rendermode InteractiveServer
 
 <PageTitle>Home</PageTitle>
+@if(User != null) {
+    <NavbarComp User="User" />
+}
 
 @if (succesHappend)
 {
@@ -24,21 +27,7 @@
     {
         @foreach (Event e in Events)
         {
-            <div class="event-container">
-                <img class="event-image" src="@e.ImageUrl" />
-                <h2 class="event-title">@e.Title</h2>
-                <p class="event-description">@e.Description</p>
-                <div class="event-footer">
-                    <div class="event-info">
-                        <p class="event-distance">@(e.EventInfo.Distance) Kilometer fra dig</p>
-                        <p class="event-distance">   -   </p>
-                        <p class="event-address">@e.EventInfo.Address</p>
-                    </div>
-                    <div class="buttons">
-                        <button class="button" @onclick="() => MeldBrugerTilAsync(e.Id)">Meld dig til</button>
-                    </div>
-                </div>
-            </div>
+            <EventComp ShownEvent="e" ButtonName="join" AddVoluntaryToEvent="() => MeldBrugerTilAsync(e.Id)"/>
         }
     }
 </div>

@@ -1,0 +1,27 @@
+﻿<div class="event-container">
+    <img class="event-image" src="@ShownEvent.ImageUrl" />
+    <h2 class="event-title">@ShownEvent.Title</h2>
+    <p class="event-description">@ShownEvent.Description</p>
+    <div class="event-footer">
+        <div class="event-info">
+            <p class="event-distance">@(ShownEvent.EventInfo.Distance.ToString("0")) Kilometer fra dig</p>
+            <p class="event-distance">   -   </p>
+            <p class="event-address">@ShownEvent.EventInfo.Address</p>
+        </div>
+        @if(ButtonName == "join") {
+            <div class="buttons">
+                <button class="add-button button" @onclick="AddVoluntaryToEventAsync">Meld dig til</button>
+            </div>
+        }
+        else if(ButtonName == "leave") {
+            <div class="buttons">
+                <button class="remove-button button" @onclick="RemoveVoluntaryFromEventAsync">Meld dig fra</button>
+            </div>
+        } 
+        else if (ButtonName == "edit") {
+            <div class="buttons">
+                <button class="add-button button" @onclick="EditEventAsync">Redigere begivenhed</button>
+            </div>
+        }
+    </div>
+</div>

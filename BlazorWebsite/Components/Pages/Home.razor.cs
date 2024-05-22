@@ -8,7 +8,9 @@ namespace BlazorWebsite.Components.Pages
     {
         protected EventRepository eventRepo { get; set; }
         public List<Event> Events {  get; set; }
-        private int userId { get; set; }
+        public User User { get; set; }
+
+
         public bool errorHappend;
         public bool succesHappend;
         public string message = string.Empty;
@@ -16,9 +18,14 @@ namespace BlazorWebsite.Components.Pages
         {
             if(firstRender)
             {
-                userId = 3;
+                User = new User
+                {
+                    Id = 3,
+                    Username = "Simon Jensen"
+                };
+                StateHasChanged();
                 eventRepo = new EventRepository();
-                Events = await eventRepo.GetAllEventsAsync(1, userId, 1, 1);
+                Events = await eventRepo.GetAllEventsAsync(1, User.Id, 1, 1);
                 StateHasChanged();
             }
         }
@@ -27,7 +34,7 @@ namespace BlazorWebsite.Components.Pages
             bool checkIfSucces;
             try
             {
-                checkIfSucces = await eventRepo.AddVoluntaryToEvent(userId, eventId);
+                checkIfSucces = await eventRepo.AddVoluntaryToEvent(User.Id, eventId);
             }
             catch
             {
