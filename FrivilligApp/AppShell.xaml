@@ -7,10 +7,24 @@
     xmlns:view="clr-namespace:FrivilligApp.Views"
     Shell.FlyoutBehavior="Disabled"
     Title="FrivilligApp">
-
+    
     <ShellContent
         Title="Home"
+        ContentTemplate="{DataTemplate view:Login}"
+        Route="Login" />
+    <ShellContent
         ContentTemplate="{DataTemplate view:AddEvent}"
         Route="AddEvent" />
+    <ShellContent
+        ContentTemplate="{DataTemplate view:SignUp}"
+        Route="SignUp" />
+    <ShellContent
+        ContentTemplate="{DataTemplate view:ChooseSkill}"
+        Route="ChooseSkill" />
+    <ShellContent
+        ContentTemplate="{DataTemplate view:Events}"
+        Route="Events" />
+
+    
 
 </Shell>

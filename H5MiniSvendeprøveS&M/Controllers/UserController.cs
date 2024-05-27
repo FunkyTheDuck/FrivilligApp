@@ -83,5 +83,17 @@ namespace H5MiniSvendeprøveS_M.Controllers
             }
             return BadRequest();
         }
+        [HttpGet("{userId}")]
+        public async Task<IActionResult> GetUserAsync(int userId)
+        {
+            try
+            {
+                return Ok(await repo.GetUserAsync(userId));
+            }
+            catch
+            {
+                return NotFound();
+            }
+        }
     }
 }

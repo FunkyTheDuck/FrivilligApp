@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="FrivilligApp.Resources.Styles.AddEventStyle">
+             x:Class="FrivilligApp.Resources.Styles.ChooseSkillStyle">
     <Style TargetType="Border">
         <Setter Property="Stroke" Value="#2562FF"/>
     </Style>
@@ -32,18 +32,13 @@
     <Style TargetType="Border" x:Key="MainBorder">
         <Setter Property="BackgroundColor" Value="#2562FF"/>
     </Style>
-    <Style TargetType="Label" x:Key="Headline">
-        <Setter Property="FontSize" Value="30"/>
-        <Setter Property="TextColor" Value="White"/>
-        <Setter Property="VerticalOptions" Value="Center"/>
-        <Setter Property="HorizontalOptions" Value="Center"/>
-    </Style>
-    <Style TargetType="Label" x:Key="SubHeadline">
+    <Style TargetType="Label" x:Key="InterestHeadline">
         <Setter Property="FontSize" Value="16"/>
-        <Setter Property="TextColor" Value="White"/>
+        <Setter Property="TextColor" Value="Black"/>
     </Style>
-    <Style TargetType="CollectionView" x:Key="SkillCollection">
-        <Setter Property="BackgroundColor" Value="#2562FF"/>
+    <Style TargetType="Label" x:Key="SkillHeadline">
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="TextColor" Value="Black"/>
     </Style>
     <Style TargetType="Border" x:Key="Skills">
         <Setter Property="VerticalOptions" Value="Center"/>
@@ -69,12 +64,6 @@
         <Setter Property="HorizontalOptions" Value="Center"/>
         <Setter Property="VerticalOptions" Value="Center"/>
     </Style>
-    <Style TargetType="Entry" x:Key="Input">
-
-    </Style>
-    <Style TargetType="CollectionView" x:Key="InterestCollection">
-        <Setter Property="BackgroundColor" Value="#2562FF"/>
-    </Style>
     <Style TargetType="Border" x:Key="Interests">
         <Setter Property="VerticalOptions" Value="Center"/>
         <Setter Property="StrokeThickness" Value="2"/>
@@ -99,5 +88,10 @@
         <Setter Property="HorizontalOptions" Value="Center"/>
         <Setter Property="VerticalOptions" Value="Center"/>
     </Style>
-
+    <Style TargetType="Button" x:Key="SaveBtn">
+        <Setter Property="WidthRequest" Value="70"/>
+        <Setter Property="HorizontalOptions" Value="End"/>
+        <Setter Property="BackgroundColor" Value="#2562FF"/>
+        <Setter Property="Padding" Value="0"/>
+    </Style>
 </ResourceDictionary>

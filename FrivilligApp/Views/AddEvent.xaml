@@ -4,7 +4,7 @@
              x:Class="FrivilligApp.Views.AddEvent"
              xmlns:ViewModels="clr-namespace:FrivilligApp.ViewModels"
              xmlns:rd="clr-namespace:FrivilligApp.Resources.Styles"
-             Title="AddEvent">
+             Title="">
     <ContentPage.BindingContext>
         <ViewModels:AddEventViewModel/>
     </ContentPage.BindingContext>
@@ -15,10 +15,105 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </ContentPage.Resources>
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <ScrollView>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="30"/>
+            </Grid.ColumnDefinitions>
+            <Border Grid.ColumnSpan="3" Style="{StaticResource HeaderBorder}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="200"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Start" Text="FrivilligApp" Style="{StaticResource HomeButton}"/>
+                    <Button Grid.Column="2" HorizontalOptions="End" Text="Simon Jensen" Style="{StaticResource ProfileButton}"/>
+                </Grid>
+            </Border>
+            <Border Grid.Column="1" Grid.Row="2" Style="{StaticResource MainBorder}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="15"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="15"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="100"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="1" Text="Opret begivenhed" Style="{StaticResource Headline}"/>
+                    <Entry Grid.Row="1" Grid.Column="1" x:Name="Title" Text="{Binding Title}" Placeholder="Begivenhedens navn" Style="{StaticResource Input}"></Entry>
+                    <Entry Grid.Row="2" Grid.Column="1" x:Name="Description" Text="{Binding Description}" Placeholder="Beskrivelse" Style="{StaticResource Input}"></Entry>
+                    <Entry Grid.Row="3" Grid.Column="1" x:Name="ImageURL" Text="{Binding ImageUrl}" Placeholder="Billede URL" Style="{StaticResource Input}"></Entry>
+                    <Entry Grid.Row="4" Grid.Column="1" x:Name="Address" Text="{Binding Address}" Placeholder="Begivenhedens adresse" Style="{StaticResource Input}"></Entry>
+                    <Label Grid.Row="5" Grid.Column="1" Text="Vælg nogle interesser begivenheden handler om" Style="{StaticResource SubHeadline}"/>
+                    <CollectionView Grid.Row="6" Grid.Column="1" ItemsSource="{Binding SkillsList}" Style="{StaticResource SkillCollection}" SelectionMode="Multiple" SelectedItems="{Binding SelectedSkills}">
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout Orientation="Vertical" Span="3" VerticalItemSpacing="0"/>
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Style="{StaticResource Skills}">
+                                    <ContentView>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Grid.Column="0" Text="{Binding Skill}" Style="{StaticResource SkillLabel}"  HorizontalTextAlignment="Center"/>
+                                        </Grid>
+                                    </ContentView>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                    <Label Grid.Row="7" Grid.Column="1" Text="Vælg nogle færdigheder begivenheden handler om" Style="{StaticResource SubHeadline}"/>
+                    <CollectionView Grid.Row="8" Grid.Column="1" ItemsSource="{Binding InterestsList}" Style="{StaticResource InterestCollection}"  SelectionMode="Multiple" SelectedItems="{Binding SelectedInterests}">
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout Orientation="Vertical" Span="3" VerticalItemSpacing="0"/>
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Style="{StaticResource Interests}">
+                                    <ContentView>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Grid.Column="0" Text="{Binding Interest}" Style="{StaticResource InterestLabel}" HorizontalTextAlignment="Center"/>
+                                        </Grid>
+                                    </ContentView>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Grid>
+            </Border>
+            <Button Grid.Row="4" Grid.Column="1" Text="Opret begivenhed" HorizontalOptions="End" Command="{Binding addEvent}" Style="{StaticResource AddEventButton}"/>
+        </Grid>
+    </ScrollView>
+    
 </ContentPage>

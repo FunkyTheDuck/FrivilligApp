@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FrivilligApp.Views.ChooseSkill"
+             xmlns:ViewModels="clr-namespace:FrivilligApp.ViewModels"
+             xmlns:rd="clr-namespace:FrivilligApp.Resources.Styles"
+             Title="">
+    <ContentPage.BindingContext>
+        <ViewModels:ChooseSkillViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <rd:ChooseSkillStyle/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="115"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="115"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="30"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="30"/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.ColumnSpan="3" Grid.Row="0" Style="{StaticResource HeaderBorder}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Start" Text="FrivilligApp" Style="{StaticResource HomeButton}"/>
+                <Button Grid.Column="2" HorizontalOptions="End" Text="Simon Jensen" Style="{StaticResource ProfileButton}"/>
+            </Grid>
+        </Border>
+        <Label Grid.Row="2" Grid.Column="1" Style="{StaticResource InterestHeadline}" Text="Vælg nogle interesser du er interesseret i"/>
+        <Border Grid.Row="3" Grid.Column="1" Style="{StaticResource MainBorder}">
+            <CollectionView Grid.Row="8" Grid.Column="1" ItemsSource="{Binding InterestsList}" Style="{StaticResource InterestCollection}"  SelectionMode="Multiple" SelectedItems="{Binding SelectedInterests}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="3" VerticalItemSpacing="0"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{StaticResource Interests}">
+                            <ContentView>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0" Text="{Binding Interest}" Style="{StaticResource InterestLabel}" HorizontalTextAlignment="Center"/>
+                                </Grid>
+                            </ContentView>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Border>
+        <Label Grid.Row="5" Grid.Column="1" Style="{StaticResource SkillHeadline}" Text="Vælg nogle færdigheder du vil arbejde med"/>
+        <Border Grid.Row="6" Grid.Column="1" Style="{StaticResource MainBorder}">
+            <CollectionView Grid.Row="6" Grid.Column="1" ItemsSource="{Binding SkillsList}" Style="{StaticResource SkillCollection}" SelectionMode="Multiple" SelectedItems="{Binding SelectedSkills}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="3" VerticalItemSpacing="0"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{StaticResource Skills}">
+                            <ContentView>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0" Text="{Binding Skill}" Style="{StaticResource SkillLabel}"  HorizontalTextAlignment="Center"/>
+                                </Grid>
+                            </ContentView>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Border>
+        <Button Grid.Row="8" Grid.Column="1" Style="{StaticResource SaveBtn}" Text="Save" Command="{Binding save}"/>
+    </Grid>
+</ContentPage>

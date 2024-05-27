@@ -2,5 +2,41 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FrivilligApp.Resources.Styles.LoginStyle">
-
+    <Style TargetType="Border" x:Key="HeaderBorder">
+        <Setter Property="BackgroundColor" Value="#2562FF"/>
+    </Style>
+    <Style TargetType="Button" x:Key="HomeButton">
+        <Setter Property="FontSize" Value="22"/>
+        <Setter Property="WidthRequest" Value="150"/>
+        <Setter Property="VerticalOptions" Value="Center"/>
+        <Setter Property="HorizontalOptions" Value="Center"/>
+        <Setter Property="TextColor" Value="White"/>
+        <Setter Property="BackgroundColor" Value="#2562FF"/>
+    </Style>
+    <Style TargetType="Border" x:Key="MainBorder">
+        <Setter Property="BackgroundColor" Value="#2562FF"/>
+    </Style>
+    <Style TargetType="Label" x:Key="Headline">
+        <Setter Property="VerticalOptions" Value="Center"/>
+        <Setter Property="HorizontalOptions" Value="Center"/>
+        <Setter Property="TextColor" Value="White"/>
+        <Setter Property="FontSize" Value="30"/>
+    </Style>
+    <Style TargetType="Entry" x:Key="Input">
+        <Setter Property="VerticalOptions" Value="Start"/>
+    </Style>
+    <Style TargetType="Button" x:Key="SignUpButton">
+        <Setter Property="WidthRequest" Value="100"/>
+        <Setter Property="HeightRequest" Value="40"/>
+        <Setter Property="BackgroundColor" Value="#0018F2"/>
+        <Setter Property="FontSize" Value="22"/>
+        <Setter Property="Padding" Value="0"/>
+    </Style>
+    <Style TargetType="Button" x:Key="LoginButton">
+        <Setter Property="WidthRequest" Value="100"/>
+        <Setter Property="HeightRequest" Value="40"/>
+        <Setter Property="BackgroundColor" Value="#0018F2"/>
+        <Setter Property="FontSize" Value="22"/>
+        <Setter Property="Padding" Value="0"/>
+    </Style>
 </ResourceDictionary>
