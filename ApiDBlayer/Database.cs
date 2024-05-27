@@ -18,6 +18,11 @@ namespace ApiDBlayer
         public DbSet<DtoUser> Users { get; set; }
         public DbSet<DtoUserCredentials> UserCredentials { get; set; }
         public DbSet<DtoUserInfo> UserInfo { get; set; }
+        public DbSet<DtoEventInfoInterests> EventInfoInterests { get; set; }
+        public DbSet<DtoEventInfoSkills> EventInfoSkills { get; set; }
+        public DbSet<DtoUserInfoInterests> UserInfoInterests { get; set; }
+        public DbSet<DtoUserInfoSkills> UserInfoSkills { get; set; }
+        public DbSet<DtoEventUser> EventUsers { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=localhost;DataBase=FrivilligDatabase;Integrated Security=True; TrustServerCertificate=true;")
@@ -27,10 +32,11 @@ namespace ApiDBlayer
         {
             modelBuilder.Entity<DtoRatings>().HasOne(x => x.Sender).WithMany().HasForeignKey(x => x.SenderId).OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<DtoUserInfo>().HasMany(x => x.Skills).WithMany(x => x.UserInfo);
-            modelBuilder.Entity<DtoUserInfo>().HasMany(x => x.Interests).WithMany(x => x.UserInfo);
-            modelBuilder.Entity<DtoEventInfo>().HasMany(x => x.Skills).WithMany(x => x.EventInfo);
-            modelBuilder.Entity<DtoEventInfo>().HasMany(x => x.Interests).WithMany(x => x.EventInfo);
+            modelBuilder.Entity<DtoUserInfo>().HasMany(x => x.Skills).WithMany(x => x.UserInfo).UsingEntity<DtoUserInfoSkills>();
+            modelBuilder.Entity<DtoUserInfo>().HasMany(x => x.Interests).WithMany(x => x.UserInfo).UsingEntity<DtoUserInfoInterests>();
+            modelBuilder.Entity<DtoEventInfo>().HasMany(x => x.Skills).WithMany(x => x.EventInfo).UsingEntity<DtoEventInfoSkills>();
+            modelBuilder.Entity<DtoEventInfo>().HasMany(x => x.Interests).WithMany(x => x.EventInfo).UsingEntity<DtoEventInfoInterests>();
+            modelBuilder.Entity<DtoEvent>().HasMany(x => x.Volunteers).WithMany(x => x.Events).UsingEntity<DtoEventUser>();
 
             modelBuilder.Entity<DtoSkills>().HasData(new DtoSkills { Id = 1, Skill = "Lave mad" });
             modelBuilder.Entity<DtoSkills>().HasData(new DtoSkills { Id = 2, Skill = "Kører bil" });

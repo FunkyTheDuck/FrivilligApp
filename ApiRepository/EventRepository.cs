@@ -16,9 +16,9 @@ namespace ApiRepository
     public class EventRepository
     {
         Database db;
-        public EventRepository() 
-        {  
-            db = new Database(); 
+        public EventRepository()
+        {
+            db = new Database();
         }
         public async Task<Event> GetOneEventAsync(int eventId)
         {
@@ -51,7 +51,7 @@ namespace ApiRepository
                 ImageUrl = events.ImageUrl,
                 WantedVolunteers = events.WantedVolunteers,
                 EventInfoId = events.EventInfoId,
-                EventInfo = new DtoEventInfo {Id = events.EventInfoId, Address = events.EventInfo.Address, CoordinateX = events.EventInfo.CoordinateX, CoordinateY = events.EventInfo.CoordinateY, Skills = new List<DtoSkills>(), Interests = new List<DtoInterests>() }
+                EventInfo = new DtoEventInfo { Id = events.EventInfoId, Address = events.EventInfo.Address, CoordinateX = events.EventInfo.CoordinateX, CoordinateY = events.EventInfo.CoordinateY, Skills = new List<DtoSkills>(), Interests = new List<DtoInterests>() }
             };
             for (int i = 0; i < dtoEvent.EventInfo.Skills.Count; i++)
             {
@@ -133,9 +133,44 @@ namespace ApiRepository
                 ImageUrl = events.ImageUrl,
                 WantedVolunteers = events.WantedVolunteers,
                 EventInfoId = events.EventInfoId,
-                EventInfo = new DtoEventInfo {Id = events.EventInfoId, Address = events.EventInfo.Address, CoordinateX = events.EventInfo.CoordinateX, CoordinateY = events.EventInfo.CoordinateY }
+                EventInfo = new DtoEventInfo { Id = events.EventInfoId, Address = events.EventInfo.Address, CoordinateX = events.EventInfo.CoordinateX, CoordinateY = events.EventInfo.CoordinateY }
             };
+
             await db.Events.AddAsync(dtoEvent);
+
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            dtoEvent = await db.Events.FirstOrDefaultAsync(x => x.Title == dtoEvent.Title);
+            if (events.EventInfo.Skills != null)
+            {
+                foreach (Skills skill in events.EventInfo.Skills)
+                {
+                    DtoEventInfoSkills infoSkills = new DtoEventInfoSkills
+                    {
+                        EventInfoId = dtoEvent.EventInfoId,
+                        SkillsId = skill.Id
+                    };
+                    await db.EventInfoSkills.AddAsync(infoSkills);
+                }
+            }
+            if (events.EventInfo.Interests != null)
+            {
+                foreach (Interests interests in events.EventInfo.Interests)
+                {
+                    DtoEventInfoInterests infoInterests = new DtoEventInfoInterests
+                    {
+                        EventInfoId = dtoEvent.EventInfoId,
+                        InterestsId = interests.Id
+                    };
+                    await db.EventInfoInterests.AddAsync(infoInterests);
+                }
+            }
             try
             {
                 await db.SaveChangesAsync();
@@ -147,13 +182,13 @@ namespace ApiRepository
             return true;
         }
 
-        public async Task<List<Event>> GetFromUserInteretsAsync(int page, List<string> interests, double locationX, double locationY)
+        public async Task<List<Event>> GetFromUserInteretsAsync(int page, int userId, double locationX, double locationY)
         {
             List<DtoEvent> dtoEvents = new List<DtoEvent>();
             List<Event> eventList = new List<Event>();
             try
             {
-                dtoEvents = await db.Events.ToListAsync();
+                dtoEvents = await db.Events.Include(x => x.EventInfo.Interests).ToListAsync();
             }
             catch (Exception)
             {
@@ -170,7 +205,14 @@ namespace ApiRepository
                     Description = dtoEvent.Description,
                     ImageUrl = dtoEvent.ImageUrl,
                     WantedVolunteers = dtoEvent.WantedVolunteers,
-                    EventInfoId = dtoEvent.EventInfoId
+                    EventInfoId = dtoEvent.EventInfoId,
+                    EventInfo = new FrontendModels.EventInfo
+                    {
+                        Id = dtoEvent.EventInfoId,
+                        Address = dtoEvent.EventInfo.Address,
+                        CoordinateX = dtoEvent.EventInfo.CoordinateX,
+                        CoordinateY = dtoEvent.EventInfo.CoordinateY,
+                    },
                 };
                 double DistanceY = Math.Abs(dtoEvent.EventInfo.CoordinateY - locationY);
                 double DistanceX = Math.Abs(dtoEvent.EventInfo.CoordinateX - locationX);
@@ -185,9 +227,43 @@ namespace ApiRepository
                 events.EventInfo.Distance = DistanceY + DistanceX;
                 eventList.Add(events);
             }
-            eventList.OrderBy(x => -x.EventInfo.Interests.Count(i => interests.Contains(i.Interest))).ThenBy(x => x.EventInfo.Distance).ToList();
-
-            return eventList.GetRange(page-1*10, 10);
+            List<string> interests = await db.Users.Where(u => u.Id == userId)
+                .SelectMany(ui => ui.UserInfo.Interests)
+                .Select(i => i.Interest).ToListAsync();
+            if (interests != null && interests.Count != 0)
+            {
+                eventList = eventList
+                    .OrderByDescending(x => x.EventInfo.Interests != null ? x.EventInfo.Interests.Count(i => interests.Contains(i.Interest)) : 0)
+                    .ThenBy(x => x.EventInfo.Distance).ToList();
+            }
+            else
+            {
+                eventList = eventList
+                    .OrderBy(x => x.EventInfo.Distance).ToList();
+            }
+            if (eventList.Count > 10)
+            {
+                return eventList.GetRange(page - 1 * 10, 10);
+            }
+            return eventList;
+        }
+        public async Task<bool> AddVoluntaryToEvent(int userId, int eventId)
+        {
+            DtoEventUser dtoEventUser = new DtoEventUser
+            {
+                UserId = userId,
+                EventId = eventId
+            };
+            await db.EventUsers.AddAsync(dtoEventUser);
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

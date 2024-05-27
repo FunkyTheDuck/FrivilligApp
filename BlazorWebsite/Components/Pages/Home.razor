@@ -2,5 +2,32 @@
 @rendermode InteractiveServer
 
 <PageTitle>Home</PageTitle>
+@if(User != null) {
+    <NavbarComp User="User" />
+}
 
-<h2>Temp test</h2>
+@if (succesHappend)
+{
+    <div class="alert alert-success" role="alert">
+        @message
+    </div>
+}
+@if (errorHappend)
+{
+    <div class="alert alert-danger" role="alert">
+        @message
+    </div>
+}
+
+<div class="container">
+    <div class="header">
+        <h2 class="header-text">Begivenheder nær dig</h2>
+    </div>
+    @if (Events != null)
+    {
+        @foreach (Event e in Events)
+        {
+            <EventComp ShownEvent="e" ButtonName="join" AddVoluntaryToEvent="() => MeldBrugerTilAsync(e.Id)"/>
+        }
+    }
+</div>

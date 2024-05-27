@@ -73,7 +73,7 @@ namespace H5MiniSvendeprøveS_M.Controllers
                 bool succes;
                 try
                 {
-                    succes = await repo.UpdateEventAsync(events);
+                    succes = await repo.CreateEventAsync(events);
                 }
                 catch
                 {
@@ -87,16 +87,34 @@ namespace H5MiniSvendeprøveS_M.Controllers
             return BadRequest();
         }
         [HttpGet]
-        public async Task<IActionResult> GetFromUserInterests(int page, List<string> interests, double locationX, double locationY)
+        public async Task<IActionResult> GetFromUserInterests(int page, int userId, double locationX, double locationY)
         {
             try
             {
-                return Ok(await repo.GetFromUserInteretsAsync(page, interests, locationX, locationY));
+                return Ok(await repo.GetFromUserInteretsAsync(page, userId, locationX, locationY));
             }
             catch
             {
                 return NotFound();
             }
+        }
+        [HttpGet("/api/Event/AddVoluntary")]
+        public async Task<IActionResult> AddVoluntaryToEvent(int userId, int eventId)
+        {
+            bool checkIfSucces;
+            try
+            {
+                checkIfSucces = await repo.AddVoluntaryToEvent(userId, eventId);
+            }
+            catch
+            {
+                return NotFound();
+            }
+            if(checkIfSucces)
+            {
+                return Ok();
+            }
+            return BadRequest();
         }
     }
 }

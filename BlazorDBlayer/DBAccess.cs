@@ -17,6 +17,37 @@ namespace BlazorDBlayer
         }
         #region EventCRUD
 
+        public async Task<List<DtoEvent>> GetAllEventsAsync(int page, int userId, double x, double y)
+        {
+            HttpResponseMessage response;
+            try
+            {
+                response = await httpClient.GetAsync($"Event?page={page}&userId={userId}&locationX={x}&locationY={y}");
+            }
+            catch
+            {
+                return null;
+            }
+            if(response.IsSuccessStatusCode)
+            {
+                List<DtoEvent> events;
+                try
+                {
+                    string json = await response.Content.ReadAsStringAsync();
+                    events = JsonConvert.DeserializeObject<List<DtoEvent>>(json);
+                }
+                catch
+                {
+                    return null;
+                }
+                if(events != null && events.Count != 0)
+                {
+                    return events;
+                }
+            }
+            return null;
+        }
+
         public async Task<bool> CreateEventAsync(DtoEvent dtoEvent)
         {
             if(dtoEvent != null)
@@ -35,6 +66,96 @@ namespace BlazorDBlayer
                 return response.IsSuccessStatusCode;
             }
             return false;
+        }
+
+        public async Task<bool> AddVoluntaryToEvent(int userId, int eventId)
+        {
+            if(userId != 0 && eventId != 0)
+            {
+                HttpResponseMessage response;
+                try
+                {
+                    response = await httpClient.GetAsync($"Event/AddVoluntary?userId={userId}&eventId={eventId}");
+                }
+                catch
+                {
+                    return false;
+                }
+                return response.IsSuccessStatusCode;
+            }
+            return false;
+        }
+        #endregion
+
+
+        #region SkillsCRUD
+
+        public async Task<List<DtoSkills>> GetAllSkillsAsync()
+        {
+            HttpResponseMessage response;
+            try
+            {
+                response = await httpClient.GetAsync("Skills");
+            }
+            catch
+            {
+                return null;
+            }
+            if(response.IsSuccessStatusCode)
+            {
+                List<DtoSkills> skills;
+                try
+                {
+                    string json = await response.Content.ReadAsStringAsync();
+                    skills = JsonConvert.DeserializeObject<List<DtoSkills>>(json);
+                }
+                catch
+                {
+                    return null;
+                }
+                if(skills != null && skills.Count != 0)
+                {
+                    return skills;
+                }
+            }
+            return null;
+        }
+
+        #endregion
+
+
+
+        #region InterestsCRUD
+
+        public async Task<List<DtoInterests>> GetAllInterestsAsync()
+        {
+            HttpResponseMessage response;
+            try
+            {
+                response = await httpClient.GetAsync("Interests");
+            }
+            catch
+            {
+                return null;
+            }
+            if (response.IsSuccessStatusCode)
+            {
+                List<DtoInterests> interests;
+                try
+                {
+                    string json = await response.Content.ReadAsStringAsync();
+                    interests = JsonConvert.DeserializeObject<List<DtoInterests>>(json);
+                }
+                catch
+                {
+                    return null;
+                }
+                if (interests != null && interests.Count != 0)
+                {
+                    return interests;
+                }
+            }
+            return null;
         }
 
         #endregion

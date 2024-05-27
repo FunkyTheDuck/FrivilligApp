@@ -3,6 +3,7 @@ using ApiDBlayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApiDBlayer.Migrations
 {
     [DbContext(typeof(Database))]
-    partial class DatabaseModelSnapshot : ModelSnapshot
+    [Migration("20240516110702_addedJoinTableInCode")]
+    partial class addedJoinTableInCode
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -136,21 +139,6 @@ namespace ApiDBlayer.Migrations
                     b.HasIndex("SkillsId");
 
                     b.ToTable("EventInfoSkills");
-                });
-
-            modelBuilder.Entity("DbModels.DtoEventUser", b =>
-                {
-                    b.Property<int>("EventId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("EventId", "UserId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("EventUsers");
                 });
 
             modelBuilder.Entity("DbModels.DtoInterests", b =>
@@ -421,6 +409,21 @@ namespace ApiDBlayer.Migrations
                     b.ToTable("UserInfoSkills");
                 });
 
+            modelBuilder.Entity("DtoEventDtoUser", b =>
+                {
+                    b.Property<int>("EventsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VolunteersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("EventsId", "VolunteersId");
+
+                    b.HasIndex("VolunteersId");
+
+                    b.ToTable("DtoEventDtoUser");
+                });
+
             modelBuilder.Entity("DbModels.DtoEvent", b =>
                 {
                     b.HasOne("DbModels.DtoEventInfo", "EventInfo")
@@ -468,25 +471,6 @@ namespace ApiDBlayer.Migrations
                     b.Navigation("EventInfo");
 
                     b.Navigation("Skills");
-                });
-
-            modelBuilder.Entity("DbModels.DtoEventUser", b =>
-                {
-                    b.HasOne("DbModels.DtoEvent", "Event")
-                        .WithMany()
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DbModels.DtoUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Event");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("DbModels.DtoRatings", b =>
@@ -563,6 +547,21 @@ namespace ApiDBlayer.Migrations
                     b.Navigation("Skills");
 
                     b.Navigation("UserInfo");
+                });
+
+            modelBuilder.Entity("DtoEventDtoUser", b =>
+                {
+                    b.HasOne("DbModels.DtoEvent", null)
+                        .WithMany()
+                        .HasForeignKey("EventsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DbModels.DtoUser", null)
+                        .WithMany()
+                        .HasForeignKey("VolunteersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
