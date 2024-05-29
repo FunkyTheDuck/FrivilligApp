@@ -47,7 +47,66 @@ namespace BlazorDBlayer
             }
             return null;
         }
-
+        public async Task<List<DtoEvent>> GetVoluntaryEventsAsync(int userId)
+        {
+            HttpResponseMessage response;
+            try
+            {
+                response = await httpClient.GetAsync($"Event/Voluntary?userId={userId}");
+            }
+            catch
+            {
+                return null;
+            }
+            if(response.IsSuccessStatusCode)
+            {
+                List<DtoEvent> events;
+                try
+                {
+                    string json = await response.Content.ReadAsStringAsync();
+                    events = JsonConvert.DeserializeObject<List<DtoEvent>>(json);
+                }
+                catch
+                {
+                    return null;
+                }
+                if (events != null && events.Count != 0)
+                {
+                    return events;
+                }
+            }
+            return null;
+        }
+        public async Task<List<DtoEvent>> GetOwnersEventsAsync(int userId)
+        {
+            HttpResponseMessage response;
+            try
+            {
+                response = await httpClient.GetAsync($"Event/Owner?userId={userId}");
+            }
+            catch
+            {
+                return null;
+            }
+            if (response.IsSuccessStatusCode)
+            {
+                List<DtoEvent> events;
+                try
+                {
+                    string json = await response.Content.ReadAsStringAsync();
+                    events = JsonConvert.DeserializeObject<List<DtoEvent>>(json);
+                }
+                catch
+                {
+                    return null;
+                }
+                if (events != null && events.Count != 0)
+                {
+                    return events;
+                }
+            }
+            return null;
+        }
         public async Task<bool> CreateEventAsync(DtoEvent dtoEvent)
         {
             if(dtoEvent != null)
@@ -68,7 +127,7 @@ namespace BlazorDBlayer
             return false;
         }
 
-        public async Task<bool> AddVoluntaryToEvent(int userId, int eventId)
+        public async Task<bool> AddVoluntaryToEventAsync(int userId, int eventId)
         {
             if(userId != 0 && eventId != 0)
             {
@@ -87,6 +146,71 @@ namespace BlazorDBlayer
         }
         #endregion
 
+        #region RatingsCRUD
+
+        public async Task<List<DtoRatings>> GetNewestRatingsAsync(int userId)
+        {
+            HttpResponseMessage response;
+            try
+            {
+                response = await httpClient.GetAsync($"Rating/Newest?userId={userId}");
+            }
+            catch
+            {
+                return null;
+            }
+            if(response.IsSuccessStatusCode)
+            {
+                List<DtoRatings> dtoRatings = new List<DtoRatings>();
+                try
+                {
+                    string json = await response.Content.ReadAsStringAsync();
+                    dtoRatings = JsonConvert.DeserializeObject<List<DtoRatings>>(json);
+                }
+                catch
+                {
+                    return null;
+                }
+                if(dtoRatings != null && dtoRatings.Count != 0)
+                {
+                    return dtoRatings;
+                }
+            }
+            return null;
+        }
+
+        public async Task<List<DtoRatings>> GetAllUsersRatingsAsync(int userId)
+        {
+            HttpResponseMessage response;
+            try
+            {
+                response = await httpClient.GetAsync($"Rating?userId={userId}");
+            }
+            catch
+            {
+                return null;
+            }
+            if (response.IsSuccessStatusCode)
+            {
+                List<DtoRatings> dtoRatings = new List<DtoRatings>();
+                try
+                {
+                    string json = await response.Content.ReadAsStringAsync();
+                    dtoRatings = JsonConvert.DeserializeObject<List<DtoRatings>>(json);
+                }
+                catch
+                {
+                    return null;
+                }
+                if (dtoRatings != null && dtoRatings.Count != 0)
+                {
+                    return dtoRatings;
+                }
+            }
+            return null;
+        }
+
+        #endregion
 
         #region SkillsCRUD
 

@@ -34,7 +34,7 @@ namespace BlazorWebsite.Components.Pages
             bool checkIfSucces;
             try
             {
-                checkIfSucces = await eventRepo.AddVoluntaryToEvent(User.Id, eventId);
+                checkIfSucces = await eventRepo.AddVoluntaryToEventAsync(User.Id, eventId);
             }
             catch
             {

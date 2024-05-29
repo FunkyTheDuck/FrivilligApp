@@ -265,5 +265,85 @@ namespace ApiRepository
             }
             return true;
         }
+        public async Task<List<Event>> GetOwnersEventsAsync(int userId)
+        {
+            List<DtoEvent> dtoEvents = new List<DtoEvent>();
+            try
+            {
+                dtoEvents = await db.Events.Where(x => x.OwnerId == userId).Include(ei => ei.EventInfo).ToListAsync();
+            }
+            catch (Exception)
+            {
+                return new List<Event>();
+            }
+            if(dtoEvents != null )
+            {
+                List<Event> eventList = new List<Event>();
+                foreach (DtoEvent dtoEvent in dtoEvents)
+                {
+                    Event events = new Event
+                    {
+                        Id = dtoEvent.Id,
+                        OwnerId = dtoEvent.OwnerId,
+                        VoluntaryId = dtoEvent.VoluntaryId,
+                        Title = dtoEvent.Title,
+                        Description = dtoEvent.Description,
+                        ImageUrl = dtoEvent.ImageUrl,
+                        WantedVolunteers = dtoEvent.WantedVolunteers,
+                        EventInfoId = dtoEvent.EventInfoId,
+                        EventInfo = new FrontendModels.EventInfo
+                        {
+                            Id = dtoEvent.EventInfoId,
+                            Address = dtoEvent.EventInfo.Address,
+                            CoordinateX = dtoEvent.EventInfo.CoordinateX,
+                            CoordinateY = dtoEvent.EventInfo.CoordinateY,
+                        },
+                    };
+                    eventList.Add(events);
+                }
+                return eventList;
+            }
+            return null;
+        }
+        public async Task<List<Event>> GetVoluntarysEventsAsync(int userId)
+        {
+            List<DtoEvent> dtoEvents = new List<DtoEvent>();
+            try
+            {
+                dtoEvents = await db.Events.Where(x => x.OwnerId == userId).Include(ei => ei.EventInfo).ToListAsync();
+            }
+            catch (Exception)
+            {
+                return new List<Event>();
+            }
+            if (dtoEvents != null)
+            {
+                List<Event> eventList = new List<Event>();
+                foreach (DtoEvent dtoEvent in dtoEvents)
+                {
+                    Event events = new Event
+                    {
+                        Id = dtoEvent.Id,
+                        OwnerId = dtoEvent.OwnerId,
+                        VoluntaryId = dtoEvent.VoluntaryId,
+                        Title = dtoEvent.Title,
+                        Description = dtoEvent.Description,
+                        ImageUrl = dtoEvent.ImageUrl,
+                        WantedVolunteers = dtoEvent.WantedVolunteers,
+                        EventInfoId = dtoEvent.EventInfoId,
+                        EventInfo = new FrontendModels.EventInfo
+                        {
+                            Id = dtoEvent.EventInfoId,
+                            Address = dtoEvent.EventInfo.Address,
+                            CoordinateX = dtoEvent.EventInfo.CoordinateX,
+                            CoordinateY = dtoEvent.EventInfo.CoordinateY,
+                        },
+                    };
+                    eventList.Add(events);
+                }
+                return eventList;
+            }
+            return null;
+        }
     }
 }

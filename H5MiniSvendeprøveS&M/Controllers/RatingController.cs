@@ -65,5 +65,17 @@ namespace H5MiniSvendeprøveS_M.Controllers
                 return NotFound();
             }
         }
+        [HttpGet("Newest")]
+        public async Task<IActionResult> GetUsersNewestRatingsAsync(int userId)
+        {
+            try
+            {
+                return Ok(await repo.GetUsersNewestRatingsAsync(userId));
+            }
+            catch
+            {
+                return NotFound();
+            }
+        }
     }
 }

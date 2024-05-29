@@ -49,18 +49,63 @@ namespace BlazorRepository
             }
             return false;
         }
-        public async Task<bool> AddVoluntaryToEvent(int userId, int eventId)
+        public async Task<bool> AddVoluntaryToEventAsync(int userId, int eventId)
         {
             try
             {
-                return await db.AddVoluntaryToEvent(userId, eventId);
+                return await db.AddVoluntaryToEventAsync(userId, eventId);
             }
             catch
             {
                 return false;
             }
         }
-
+        public async Task<List<Event>> GetVoluntaryEventsAsync(int userId)
+        {
+            List<DtoEvent> dtoEvents;
+            try
+            {
+                dtoEvents = await db.GetVoluntaryEventsAsync(userId);
+            }
+            catch
+            {
+                return null;
+            }
+            if(dtoEvents != null && dtoEvents.Count != 0)
+            {
+                List<Event> events = new List<Event>();
+                for(int i = 0; i < dtoEvents.Count; i++)
+                {
+                    Event newEvent = ConvertFromDto(dtoEvents[i]);
+                    events.Add(newEvent);
+                }
+                return events;
+            }
+            return null;
+        }
+        public async Task<List<Event>> GetOwnersEventsAsync(int userId)
+        {
+            List<DtoEvent> dtoEvents;
+            try
+            {
+                dtoEvents = await db.GetOwnersEventsAsync(userId);
+            }
+            catch
+            {
+                return null;
+            }
+            if (dtoEvents != null && dtoEvents.Count != 0)
+            {
+                List<Event> events = new List<Event>();
+                for (int i = 0; i < dtoEvents.Count; i++)
+                {
+                    Event newEvent = ConvertFromDto(dtoEvents[i]);
+                    events.Add(newEvent);
+                }
+                return events;
+            }
+            return null;
+        }
         private Event ConvertFromDto(DtoEvent events)
         {
             Event newEvent = new Event

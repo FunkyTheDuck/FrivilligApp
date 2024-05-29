@@ -1,0 +1,23 @@
+﻿@if(Rating != null)
+{
+    <div class="border">
+        <div class="header">
+            <h4 class="header-text"></h4>
+        </div>
+        <div class="footer">
+            <div class="from-container">
+                <p>Fra @Rating.Sender.Username</p>
+            </div>
+            <div>
+                @for(int i = 0; i < Rating.Rating; i++)
+                {
+                    <img src="images/FilledStar.png"/>
+                }
+                @for(int i = 0; i < AmountOfEmptyStars; i++)
+                {
+                    <img src="images/EmptyStar.png" />
+                }
+            </div>
+        </div>
+    </div>
+}
