@@ -4,7 +4,7 @@
              x:Class="FrivilligApp.Views.SignUp"
              xmlns:ViewModels="clr-namespace:FrivilligApp.ViewModels"
              xmlns:rd="clr-namespace:FrivilligApp.Resources.Styles"
-             Title="SignUp">
+             Title="">
     <ContentPage.BindingContext>
         <ViewModels:SignUpViewModel/>
     </ContentPage.BindingContext>
@@ -15,10 +15,49 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </ContentPage.Resources>
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="200"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="50"/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.ColumnSpan="3" Style="{StaticResource HeaderBorder}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Start" Text="FrivilligApp" Style="{StaticResource HomeButton}"/>
+            </Grid>
+        </Border>
+        <Border Grid.Column="1" Grid.Row="2" Style="{StaticResource MainBorder}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="20"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="1" Grid.Row="0" Text="Sign up" Style="{StaticResource Headline}"/>
+                <Entry Grid.Column="1" Grid.Row="1" Text="{Binding username}" Placeholder="Username" Style="{StaticResource Input}"/>
+                <Entry Grid.Column="1" Grid.Row="2" IsPassword="True" Text="{Binding password}" Placeholder="Password" Style="{StaticResource Input}"/>
+                <Entry Grid.Column="1" Grid.Row="3" IsPassword="True" Text="{Binding repeatPassword}" Placeholder="Gentag password" Style="{StaticResource Input}"/>
+                <Button Grid.Column="1" Grid.Row="4" Text="Go back" HorizontalOptions="Start" Command="{Binding goBack}" Style="{StaticResource BackButton}"/>
+                <Button Grid.Column="1" Grid.Row="4" Text="Sign up" HorizontalOptions="End" Command="{Binding signUp}" Style="{StaticResource LoginButton}"/>
+            </Grid>
+        </Border>
+    </Grid>
 </ContentPage>

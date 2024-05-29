@@ -19,8 +19,8 @@ namespace FrivilligApp
                 });
 
 #if ANDROID && DEBUG
-            Platforms.Android.DangerousAndroidMessageHandlerEmitter.Register();
-            Platforms.Android.DangerousTrustProvider.Register();
+            //Platforms.Android.DangerousAndroidMessageHandlerEmitter.Register();
+            //Platforms.Android.DangerousTrustProvider.Register();
             builder.Logging.AddDebug();
 #endif
 

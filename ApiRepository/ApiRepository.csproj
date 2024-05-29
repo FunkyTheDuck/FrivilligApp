@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ApiDBlayer\ApiDBlayer.csproj" />
     <ProjectReference Include="..\DbModels\DbModels.csproj" />
     <ProjectReference Include="..\FrontendModels\FrontendModels.csproj" />
