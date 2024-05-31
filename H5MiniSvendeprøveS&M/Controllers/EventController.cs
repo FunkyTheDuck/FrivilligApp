@@ -140,30 +140,6 @@ namespace H5MiniSvendeprøveS_M.Controllers
             }
             return BadRequest();
         }
-        [HttpGet("Owners")]
-        public async Task<IActionResult> GetOwnersEventsAsync(int userId)
-        {
-            try
-            {
-                return Ok(await repo.GetOwnersEventsAsync(userId));
-            }
-            catch
-            {
-                return NotFound();
-            }
-        }
-        [HttpGet("Voluntary")]
-        public async Task<IActionResult> GetVoluntarysEventsAsync(int userId)
-        {
-            try
-            {
-                return Ok(await repo.GetVoluntarysEventsAsync(userId));
-            }
-            catch
-            {
-                return NotFound();
-            }
-        }
         [HttpDelete("/api/Event/RemoveVoluntary")]
         public async Task<IActionResult> RemoveVoluntaryFromEvent(int userId, int eventId)
         {
