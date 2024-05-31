@@ -1,4 +1,6 @@
 ﻿@page "/signup"
+@rendermode InteractiveServer
+
 <NavbarComp />
 
 <div class="container">
@@ -7,13 +9,13 @@
             <h2 class="header-text">Sign up</h2>
         </div>
         <div class="inputs">
-            <input class="input" placeholder="Username" />
-            <input class="input" type="password" placeholder="Password" />
-            <input class="input" type="password" placeholder="Gentag password" />
+            <input class="input" placeholder="Username" @bind="Username" />
+            <input class="input" type="password" placeholder="Password" @bind="Password" />
+            <input class="input" type="password" placeholder="Gentag password" @bind="RepeatedPassword"/>
         </div>
         <div class="buttons">
             <button class="button">Gå tilbage</button>
-            <button class="button">Sign up</button>
+            <button class="button" @onclick="SignUserUpAsync">Sign up</button>
         </div>
     </div>
 </div>

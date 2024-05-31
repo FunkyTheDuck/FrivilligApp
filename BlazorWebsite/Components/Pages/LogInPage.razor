@@ -1,4 +1,6 @@
 ﻿@page "/login"
+@rendermode InteractiveServer
+
 <NavbarComp />
 
 <div class="container">
@@ -7,12 +9,12 @@
             <h2 class="header-text">Log in</h2>
         </div>
         <div class="inputs">
-            <input class="input" placeholder="Username" />
-            <input class="input" type="password" placeholder="Password" />
+            <input class="input" placeholder="Username" @bind="Username" />
+            <input class="input" type="password" placeholder="Password" @bind="Password" />
         </div>
         <div class="buttons">
-            <button class="button">Sign up</button>
-            <button class="button">Log in</button>
+            <button class="button" @onclick="GoToSignUpAsync">Sign up</button>
+            <button class="button" @onclick="LogUserInAsync">Log in</button>
         </div>
     </div>
 </div>

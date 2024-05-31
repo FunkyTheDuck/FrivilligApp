@@ -1,18 +1,51 @@
 ﻿@page "/profile"
 @rendermode InteractiveServer
-
+@attribute [Authorize]
 
 <NavbarComp User="User" />
 
 <div class="page-container">
     <div class="user-info-container">
-        <div class="user-info">
-
-        </div>
+        @if (User != null)
+        {
+            <div class="user-info">
+                <img class="profil-picture" src="https://cdn-icons-png.freepik.com/512/1144/1144760.png?ga=GA1.1.653085772.1714984535" />
+                <h3 class="profil-name">@User.Username</h3>
+            </div>
+            <div class="user-interests">
+                <p class="header-text">Valgte Interesser:</p>
+                @if (User.UserInfo != null && User.UserInfo.interests != null)
+                {
+                    <p>
+                        @foreach (Interests i in User.UserInfo.interests)
+                        {
+                            @(i.Interest)
+                        }
+                        ,
+                    </p>
+                }
+            </div>
+            <div class="user-skills">
+                <p class="header-text">Valgte færdigheder:</p>
+                @if (User.UserInfo != null && User.UserInfo.Skills != null)
+                {
+                    <p>
+                        @foreach (Skills s in User.UserInfo.Skills)
+                        {
+                            @(s.Skill)
+                        }
+                        ,
+                    </p>
+                }
+            </div>
+            <div class="buttons">
+                <button class="button" @onclick="ChangeInterestsAndSkills">Ændre interresser/færdigheder</button>
+            </div>
+        }
     </div>
     <div class="user-events-container">
         <div class="event-header">
-            @if(User != null) 
+            @if (User != null)
             {
                 @if (User.IsVoluntary)
                 {
@@ -27,14 +60,14 @@
         <div class="events">
             @if (Events != null && User != null)
             {
-                @if(User.IsVoluntary) 
+                @if (User.IsVoluntary)
                 {
                     @foreach (Event e in Events)
                     {
                         <EventComp ShownEvent="e" RemoveVoluntaryFromEvent="RemoveUserFromEvent" ButtonName="leave" />
                     }
                 }
-                else 
+                else
                 {
                     @foreach (Event e in Events)
                     {
@@ -45,12 +78,13 @@
         </div>
     </div>
     <div class="user-ratings-container">
+        <h5>Anmeldelser om dig</h5>
         <div class="rating-header">
             @if (NewestRatings != null)
             {
                 @foreach (Ratings r in NewestRatings)
                 {
-                    <RatingComp Rating="r"/>
+                    <RatingComp Rating="r" />
                 }
             }
         </div>

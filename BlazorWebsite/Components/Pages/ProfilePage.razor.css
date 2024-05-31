@@ -1,17 +1,59 @@
 ﻿body {
 }
 .page-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 50px;
+}
+.header-text {
 
 }
 .user-info-container {
+  
+}
+.user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.profil-picture {
+    width: 15vw;
+    margin-top: 50px;
+}
+.profil-name {
+    margin-top: 10px;
+}
+.user-interests {
+
+}
+.user-skills {
 
 }
 .user-events-container {
-
 }
 .user-ratings-container {
 
 }
 .events {
 
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.button {
+    margin: 5px;
+    border: 0px;
+    border-radius: 10px;
+    background-color: #2562FF;
+    padding: 5px;
+    color: white;
+}
+
+@media all and (max-width: 1300px) {
+    .user-ratings-container {
+        display: none;
+    }
 }

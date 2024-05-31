@@ -1,12 +1,17 @@
 ﻿using BlazorRepository;
 using FrontendModels;
+using Microsoft.AspNetCore.Components;
 
 namespace BlazorWebsite.Components.Pages
 {
     partial class ProfilePage
     {
-        protected EventRepository eventRepo {  get; set; }
-        protected RatingRepository ratingRepo { get; set; }
+        [Inject]
+        protected IEventRepository eventRepo {  get; set; }
+        [Inject]
+        protected IRatingRepository ratingRepo { get; set; }
+        [Inject]
+        protected IUserRepository userRepo { get; set; }
         public User User { get; set; }
         public List<Event> Events { get; set; }
         public List<Ratings> NewestRatings { get; set; }
@@ -15,8 +20,6 @@ namespace BlazorWebsite.Components.Pages
         {
             if(firstRender)
             {
-                eventRepo = new EventRepository();
-                ratingRepo = new RatingRepository();
                 User = new User
                 {
                     Id = 3,
@@ -37,6 +40,10 @@ namespace BlazorWebsite.Components.Pages
             }
         }
         public async Task RemoveUserFromEvent()
+        {
+
+        }
+        public async Task ChangeInterestsAndSkills()
         {
 
         }

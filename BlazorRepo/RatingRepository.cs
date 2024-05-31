@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BlazorRepository
 {
-    public class RatingRepository
+    public class RatingRepository : IRatingRepository
     {
         protected DBAccess db { get; set; }
 
@@ -28,10 +28,10 @@ namespace BlazorRepository
             {
                 return null;
             }
-            if(dtoRatings != null && dtoRatings.Count != 0)
+            if (dtoRatings != null && dtoRatings.Count != 0)
             {
                 List<Ratings> ratings = new List<Ratings>();
-                for(int i = 0; i < dtoRatings.Count; i++)
+                for (int i = 0; i < dtoRatings.Count; i++)
                 {
                     Ratings rating = ConvertFromDto(dtoRatings[i]);
                     ratings.Add(rating);

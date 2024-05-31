@@ -1,68 +1,70 @@
 ﻿@page "/CreateEvent"
 @rendermode InteractiveServer
 
-@if(succesHappend)
-{
-    <div class="alert alert-success" role="alert">
-        @message
-    </div>
-}
-@if(errorHappend)
-{
-    <div class="alert alert-danger" role="alert">
-        @message
-    </div>
-}
+<AuthorizeView>
+    @if (succesHappend)
+    {
+        <div class="alert alert-success" role="alert">
+            @message
+        </div>
+    }
+    @if (errorHappend)
+    {
+        <div class="alert alert-danger" role="alert">
+            @message
+        </div>
+    }
 
-<div class="container">
-    <div class="background">
-        <div class="header">
-            <h2 class="header-text">Opret begivenhed</h2>
-        </div>
-        @if (CreatedEvent != null)
-        {
-            <div class="inputs">
-                <input class="input" placeholder="Begivenhedens navn" @bind="CreatedEvent.Title" />
-                <input class="input" placeholder="Beskrivelse" @bind="CreatedEvent.Description" />
-                <input class="input" placeholder="Billede url" @bind="CreatedEvent.ImageUrl" />
-                <input class="input" placeholder="Begivenhedens addresse" @bind="CreatedEvent.EventInfo.Address" />
+    <div class="container">
+        <div class="background">
+            <div class="header">
+                <h2 class="header-text">Opret begivenhed</h2>
             </div>
-        }
-        <div class="skills-interests">
-            @if (AllSkills != null)
+            @if (CreatedEvent != null)
             {
-                <div class="skills-container">
-                    <h4 class="skills-interests-header">Vælg nogle færdigheder begivenheden mangler</h4>
-                    <div class="skills-interests-inputs">
-                        @foreach (Skills skill in AllSkills)
-                        {
-                            <div class="skills-interests-input">
-                                <input class="skills-interests-checkbox" type="checkbox" @onchange="() => ChangeSkillByIdAsync(skill.Id)" />
-                                <p class="skills-interests-name">@skill.Skill</p>
-                            </div>
-                        }
-                    </div>
+                <div class="inputs">
+                    <input class="input" placeholder="Begivenhedens navn" @bind="CreatedEvent.Title" />
+                    <input class="input" placeholder="Beskrivelse" @bind="CreatedEvent.Description" />
+                    <input class="input" placeholder="Billede url" @bind="CreatedEvent.ImageUrl" />
+                    <input class="input" placeholder="Begivenhedens addresse" @bind="CreatedEvent.EventInfo.Address" />
                 </div>
             }
-            <div class="skills-interests-space"></div>
-            @if (AllInterests != null)
-            {
-                <div class="interests-container">
-                    <h4 class="skills-interests-header">Vælg nogle interesser begivenheden handler om</h4>
-                    <div class="skills-interests-inputs interests-only-inputs">
-                        @foreach (Interests interest in AllInterests)
-                        {
-                            <div class="skills-interests-input">
-                                <input class="skills-interests-checkbox" type="checkbox" @onchange="() => ChangeInterestsByIdAsync(interest.Id)" />
-                                <p class="skills-interests-name">@interest.Interest</p>
-                            </div>
-                        }
+            <div class="skills-interests">
+                @if (AllSkills != null)
+                {
+                    <div class="skills-container">
+                        <h4 class="skills-interests-header">Vælg nogle færdigheder begivenheden mangler</h4>
+                        <div class="skills-interests-inputs">
+                            @foreach (Skills skill in AllSkills)
+                            {
+                                <div class="skills-interests-input">
+                                    <input class="skills-interests-checkbox" type="checkbox" @onchange="() => ChangeSkillByIdAsync(skill.Id)" />
+                                    <p class="skills-interests-name">@skill.Skill</p>
+                                </div>
+                            }
+                        </div>
                     </div>
-                </div>
-            }
+                }
+                <div class="skills-interests-space"></div>
+                @if (AllInterests != null)
+                {
+                    <div class="interests-container">
+                        <h4 class="skills-interests-header">Vælg nogle interesser begivenheden handler om</h4>
+                        <div class="skills-interests-inputs interests-only-inputs">
+                            @foreach (Interests interest in AllInterests)
+                            {
+                                <div class="skills-interests-input">
+                                    <input class="skills-interests-checkbox" type="checkbox" @onchange="() => ChangeInterestsByIdAsync(interest.Id)" />
+                                    <p class="skills-interests-name">@interest.Interest</p>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="buttons">
+            <button class="button" @onclick="HandleValidSubmitAsync">Opret begivenhed</button>
         </div>
     </div>
-    <div class="buttons">
-        <button class="button" @onclick="HandleValidSubmitAsync">Opret begivenhed</button>
-    </div>
-</div>
+</AuthorizeView>

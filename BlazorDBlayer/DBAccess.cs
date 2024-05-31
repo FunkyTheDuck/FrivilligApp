@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace BlazorDBlayer
 {
@@ -146,6 +147,61 @@ namespace BlazorDBlayer
         }
         #endregion
 
+        #region
+
+        public async Task<DtoUser> LogUserInAsync(string username, string hashedPassword)
+        {
+            HttpResponseMessage response;
+            try
+            {
+                response = await httpClient.GetAsync($"User?username={username}&hashedPassword={hashedPassword}");
+            }
+            catch
+            {
+                return null;
+            }
+            if(response.IsSuccessStatusCode)
+            {
+                DtoUser user;
+                try
+                {
+                    string json = await response.Content.ReadAsStringAsync();
+                    user = JsonConvert.DeserializeObject<DtoUser>(json);
+                }
+                catch
+                {
+                    return null;
+                }
+                if (user != null)
+                {
+                    return user;
+                }
+            }
+            return null;
+        }
+
+        public async Task<bool> CreateUserAsync(DtoUser user)
+        {
+            if (user != null)
+            {
+                string json = JsonConvert.SerializeObject(user);
+                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                HttpResponseMessage response;
+                try
+                {
+                    response = await httpClient.PostAsync("User", content);
+                }
+                catch
+                {
+                    return false;
+                }
+                return response.IsSuccessStatusCode;
+            }
+            return false;
+        }
+
+        #endregion
+
         #region RatingsCRUD
 
         public async Task<List<DtoRatings>> GetNewestRatingsAsync(int userId)
@@ -246,8 +302,6 @@ namespace BlazorDBlayer
         }
 
         #endregion
-
-
 
         #region InterestsCRUD
 

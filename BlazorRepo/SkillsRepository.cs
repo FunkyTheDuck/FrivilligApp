@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace BlazorRepository
 {
-    public class SkillsRepository
+    public class SkillsRepository : ISkillsRepository
     {
-        DBAccess db {  get; set; }
+        DBAccess db { get; set; }
         public SkillsRepository()
         {
             db = new DBAccess();
