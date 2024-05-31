@@ -16,6 +16,7 @@ namespace FrivilligApp.ViewModels
         public string username { get; set; }
         public string password { get; set; }
         public string repeatPassword { get; set; }
+        public bool isVoluntary { get; set; }
         public Command goBack { get; set; }
         public Command signUp { get; set; }
         public UserRepository UserRepository { get; set; }
@@ -54,16 +55,22 @@ namespace FrivilligApp.ViewModels
                 UserCredebtials = new UserCredentials
                 {
                     Password = BCrypt.Net.BCrypt.HashPassword(password),
-                }
-
+                },
+                IsVoluntary = isVoluntary,
             };
             bool created = await UserRepository.CreateUser(user);
             if (created) 
             {
                 User createdUser = await UserRepository.GetUserAsync(username, password);
                 await SecureStorage.Default.SetAsync("userId", createdUser.Id.ToString());
-
-                await Shell.Current.GoToAsync("//ChooseSkill");
+                if (isVoluntary)
+                {
+                    await Shell.Current.GoToAsync("//ChooseSkill");
+                }
+                else
+                {
+                    await Shell.Current.GoToAsync("//Events");
+                }
             }
         }
         private bool ContainsUppercaseLetter(string password)

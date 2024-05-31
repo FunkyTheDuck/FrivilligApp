@@ -46,6 +46,8 @@ namespace ApiRepository
         public async Task<User> GetUserAsync(int userId)
         {
             DtoUser dtoUser = await db.Users.Include(x => x.UserInfo).Include(x => x.UserCredebtials).FirstOrDefaultAsync(x => x.Id == userId);
+            List<DtoUserInfoSkills> userSkills = await db.UserInfoSkills.Include(x => x.Skills).Where(x => x.UserInfoId == userId).ToListAsync();
+            List<DtoUserInfoInterests> userInterests = await db.UserInfoInterests.Include(x => x.Interests).Where(x => x.UserInfoId == userId).ToListAsync();
             User user = new User
             {
                 Id = dtoUser.Id,
@@ -104,27 +106,27 @@ namespace ApiRepository
                     }
                 }
             }
-            if (dtoUser.UserInfo.Skills != null)
+            if (userSkills != null)
             {
-                for (int i = 0; i < dtoUser.UserInfo.Skills.Count; i++)
+                for (int i = 0; i < userSkills.Count; i++)
                 {
                     Skills skill = new Skills
                     {
-                        Id = user.UserInfo.Skills[i].Id,
-                        Skill = user.UserInfo.Skills[i].Skill
+                        Id = userSkills[i].Skills.Id,
+                        Skill = userSkills[i].Skills.Skill
                     };
                     user.UserInfo.Skills.Add(skill);
                 }
             }
 
-            if (dtoUser.UserInfo.Interests != null)
+            if (userInterests != null)
             {
-                for (int i = 0; i < dtoUser.UserInfo.Interests.Count; i++)
+                for (int i = 0; i < userInterests.Count; i++)
                 {
                     Interests interest = new Interests
                     {
-                        Id = user.UserInfo.interests[i].Id,
-                        Interest = user.UserInfo.interests[i].Interest
+                        Id = userInterests[i].Interests.Id,
+                        Interest = userInterests[i].Interests.Interest
                     };
                     user.UserInfo.interests.Add(interest);
                 }
@@ -235,6 +237,19 @@ namespace ApiRepository
                     }
                 }
             }
+            try
+            {
+                List<DtoUserInfoSkills> userskills = await db.UserInfoSkills.Where(x => x.UserInfoId == dtoUser.UserInfoId).ToListAsync();
+                foreach (DtoUserInfoSkills skill in userskills)
+                {
+                    db.UserInfoSkills.Remove(skill);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
             if (user.UserInfo.Skills != null)
             {
                 for (int i = 0; i < user.UserInfo.Skills.Count; i++)
@@ -247,7 +262,19 @@ namespace ApiRepository
                     dtoUser.UserInfo.Skills.Add(skill);
                 }
             }
+            try
+            {
+                List<DtoUserInfoInterests> userinterests = await db.UserInfoInterests.Where(x => x.UserInfoId == dtoUser.UserInfoId).ToListAsync();
+                foreach (DtoUserInfoInterests interests in userinterests)
+                {
+                    db.UserInfoInterests.Remove(interests);
+                }
+            }
+            catch (Exception)
+            {
 
+                throw;
+            }
             if (user.UserInfo.interests != null)
             {
                 for (int i = 0; i < user.UserInfo.interests.Count; i++)
@@ -260,6 +287,7 @@ namespace ApiRepository
                     dtoUser.UserInfo.Interests.Add(interest);
                 }
             }
+            await db.SaveChangesAsync();
             db.Users.Update(dtoUser);
             try
             {

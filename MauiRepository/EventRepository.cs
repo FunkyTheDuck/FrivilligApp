@@ -58,5 +58,97 @@ namespace MauiRepository
             }
             return false;
         }
+        public async Task<List<Event>> GetFromUserInteretsAsync(int page, int userId, double locationX, double locationY)
+        {
+            List<DtoEvent> dtoEvent = await db.GetFromUserInteretsAsync(page,userId,locationX,locationY);
+            List<Event> events = GetEvent(dtoEvent);
+            return events;
+        }
+        public async Task<List<Event>> GetEventToUserAsync(int userId)
+        {
+            List<DtoEvent> dtoEvent = await db.GetEventToUserAsync(userId);
+            List<Event> events = GetEvent(dtoEvent);
+            return events;
+        }
+        public async Task<List<Event>> GetEventToOwnerAsync(int userId)
+        {
+            List<DtoEvent> dtoEvent = await db.GetEventToOwnerAsync(userId);
+            List<Event> events = GetEvent(dtoEvent);
+            return events;
+        }
+        private List<Event> GetEvent(List<DtoEvent> dtoEvent)
+        {
+            List<Event> events = new List<Event>();
+            foreach (DtoEvent dto in dtoEvent)
+            {
+                Event newEvent = new Event
+                {
+                    Id = dto.Id,
+                    Title = dto.Title,
+                    Description = dto.Description,
+                    ImageUrl = dto.ImageUrl,
+                    WantedVolunteers = dto.WantedVolunteers,
+                    EventInfo = new EventInfo
+                    {
+                        Address = dto.EventInfo.Address,
+                        CoordinateX = dto.EventInfo.CoordinateX,
+                        CoordinateY = dto.EventInfo.CoordinateY,
+                        Skills = new(),
+                        Interests = new(),
+                    },
+                    OwnerId = dto.OwnerId,
+                };
+                if (dto.EventInfo.Skills != null)
+                {
+                    for (int i = 0; i < dto.EventInfo.Skills.Count; i++)
+                    {
+                        Skills skill = new Skills
+                        {
+                            Id = dto.EventInfo.Skills[i].Id,
+                            Skill = dto.EventInfo.Skills[i].Skill
+                        };
+                        newEvent.EventInfo.Skills.Add(skill);
+                    }
+                }
+                if (dto.EventInfo.Interests != null)
+                {
+                    for (int i = 0; i < dto.EventInfo.Interests.Count; i++)
+                    {
+                        Interests Interest = new Interests
+                        {
+                            Id = dto.EventInfo.Interests[i].Id,
+                            Interest = dto.EventInfo.Interests[i].Interest
+                        };
+                        newEvent.EventInfo.Interests.Add(Interest);
+                    }
+                }
+                events.Add(newEvent);
+            }
+            return events;
+        }
+        public async Task<bool> AddVoluntaryToEvent(int UserId, int EventId)
+        {
+            try
+            {
+                bool result = await db.AddVoluntaryToEvent(UserId, EventId);
+                return result;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public async Task<bool> RemoveVoluntaryFromEvent(int UserId, int EventId)
+        {
+            try
+            {
+                bool result = await db.RemoveVoluntaryFromEvent(UserId, EventId);
+                return result;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

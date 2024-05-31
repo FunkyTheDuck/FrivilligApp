@@ -32,6 +32,50 @@ namespace MauiDBlayer
             }
             return false;
         }
+        public async Task<List<DtoEvent>> GetFromUserInteretsAsync(int page, int userId, double locationX, double locationY)
+        {
+            HttpResponseMessage response;
+            response = await HttpClient.GetAsync($"http://10.0.2.2:5191/api/Event?page={page}&userId={userId}&locationX={locationX}&locationY={locationY}");
+            string json = await response.Content.ReadAsStringAsync();
+            List<DtoEvent> events = JsonConvert.DeserializeObject<List<DtoEvent>>(json);
+            return events;
+        }
+        public async Task<List<DtoEvent>> GetEventToUserAsync(int userId)
+        {
+            HttpResponseMessage response;
+            response = await HttpClient.GetAsync($"http://10.0.2.2:5191/api/Event/EventToUser?userId={userId}");
+            string json = await response.Content.ReadAsStringAsync();
+            List<DtoEvent> events = JsonConvert.DeserializeObject<List<DtoEvent>>(json);
+            return events;
+        }
+        public async Task<List<DtoEvent>> GetEventToOwnerAsync(int userId)
+        {
+            HttpResponseMessage response;
+            response = await HttpClient.GetAsync($"http://10.0.2.2:5191/api/Event/EventToOwner?userId={userId}");
+            string json = await response.Content.ReadAsStringAsync();
+            List<DtoEvent> events = JsonConvert.DeserializeObject<List<DtoEvent>>(json);
+            return events;
+        }
+        public async Task<bool> AddVoluntaryToEvent(int userId, int eventId)
+        {
+            if (userId != null && eventId != null)
+            {
+                HttpResponseMessage response;
+                response = await HttpClient.GetAsync($"http://10.0.2.2:5191/api/Event/AddVoluntary?userId={userId}&eventId={eventId}");
+                return response.IsSuccessStatusCode;
+            }
+            return false;
+        }
+        public async Task<bool> RemoveVoluntaryFromEvent(int userId, int eventId)
+        {
+            if (userId != null && eventId != null)
+            {
+                HttpResponseMessage response;
+                response = await HttpClient.DeleteAsync($"http://10.0.2.2:5191/api/Event/RemoveVoluntary?userId={userId}&eventId={eventId}");
+                return response.IsSuccessStatusCode;
+            }
+            return false;
+        }
 
         public async Task<List<DtoSkills>> GetSkillsAsync()
         {

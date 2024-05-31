@@ -20,10 +20,13 @@
         Route="SignUp" />
     <ShellContent
         ContentTemplate="{DataTemplate view:ChooseSkill}"
-        Route="ChooseSkill" />
+        Route="ChooseSkill"/>
     <ShellContent
         ContentTemplate="{DataTemplate view:Events}"
         Route="Events" />
+    <ShellContent
+        ContentTemplate="{DataTemplate view:Profile}"
+        Route="Profile" />
 
     
 

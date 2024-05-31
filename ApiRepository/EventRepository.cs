@@ -265,5 +265,105 @@ namespace ApiRepository
             }
             return true;
         }
+        public async Task<bool> RemoveVoluntaryFromEvent(int userId, int eventId)
+        {
+            DtoEventUser dtoEventUser = new DtoEventUser
+            {
+                UserId = userId,
+                EventId = eventId
+            };
+            db.EventUsers.Remove(dtoEventUser);
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
+        }
+        public async Task<List<Event>> GetEventToUserAsync(int userId)
+        {
+            List<DtoEventUser> dtoEventUsers = await db.EventUsers.Include(x => x.Event).ThenInclude(x => x.EventInfo).Where(x => x.UserId == userId).ToListAsync();
+            List<Event> EventList = new List<Event>();
+            for (int i = 0; i < dtoEventUsers.Count; i++)
+            {
+                Event events = new Event
+                {
+                    Id = dtoEventUsers[i].Event.Id,
+                    OwnerId = dtoEventUsers[i].Event.OwnerId,
+                    VoluntaryId = dtoEventUsers[i].Event.VoluntaryId,
+                    Title = dtoEventUsers[i].Event.Title,
+                    Description = dtoEventUsers[i].Event.Description,
+                    ImageUrl = dtoEventUsers[i].Event.ImageUrl,
+                    WantedVolunteers = dtoEventUsers[i].Event.WantedVolunteers,
+                    EventInfoId = dtoEventUsers[i].Event.EventInfoId,
+                    EventInfo = new FrontendModels.EventInfo
+                    {
+                        Id = dtoEventUsers[i].Event.EventInfoId,
+                        Address = dtoEventUsers[i].Event.EventInfo.Address,
+                        CoordinateX = dtoEventUsers[i].Event.EventInfo.CoordinateX,
+                        CoordinateY = dtoEventUsers[i].Event.EventInfo.CoordinateY,
+                    },
+                };
+                EventList.Add(events);
+            }
+            return EventList;
+        }
+        public async Task<List<Event>> GetEventToOwnerAsync(int userId)
+        {
+            List<DtoEvent> dtoEvent = await db.Events.Include(x => x.EventInfo).Where(x => x.OwnerId == userId).ToListAsync();
+            List<Event> eventList = new List<Event>();
+            for (int i = 0; i < dtoEvent.Count; i++)
+            {
+                Event events = new Event
+                {
+                    Id = dtoEvent[i].Id,
+                    OwnerId = dtoEvent[i].OwnerId,
+                    VoluntaryId = dtoEvent[i].VoluntaryId,
+                    Title = dtoEvent[i].Title,
+                    Description = dtoEvent[i].Description,
+                    ImageUrl = dtoEvent[i].ImageUrl,
+                    WantedVolunteers = dtoEvent[i].WantedVolunteers,
+                    EventInfoId = dtoEvent[i].EventInfoId,
+                    EventInfo = new FrontendModels.EventInfo
+                    {
+                        Id = dtoEvent[i].EventInfoId,
+                        Address = dtoEvent[i].EventInfo.Address,
+                        CoordinateX = dtoEvent[i].EventInfo.CoordinateX,
+                        CoordinateY = dtoEvent[i].EventInfo.CoordinateY,
+                        Skills = new(),
+                        Interests = new()
+                    }
+                };
+                if (dtoEvent[i].EventInfo.Skills != null)
+                {
+                    foreach (DtoSkills dtoSkill in dtoEvent[i].EventInfo.Skills)
+                    {
+                        Skills skill = new Skills
+                        {
+                            Id = dtoSkill.Id,
+                            Skill = dtoSkill.Skill,
+                        };
+                        events.EventInfo.Skills.Add(skill);
+                    }
+                }
+                if (dtoEvent[i].EventInfo.Interests != null)
+                {
+                    foreach (DtoInterests dtoInterests in dtoEvent[i].EventInfo.Interests)
+                    {
+                        Interests interest = new Interests
+                        {
+                            Id = dtoInterests.Id,
+                            Interest = dtoInterests.Interest,
+                        };
+                        events.EventInfo.Interests.Add(interest);
+                    }
+                }
+                eventList.Add(events);
+            }
+            return eventList;
+        }
     }
 }

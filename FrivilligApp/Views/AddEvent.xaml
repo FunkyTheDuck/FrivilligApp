@@ -38,7 +38,7 @@
                         <ColumnDefinition Width="200"/>
                     </Grid.ColumnDefinitions>
                     <Button Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Start" Text="FrivilligApp" Style="{StaticResource HomeButton}"/>
-                    <Button Grid.Column="2" HorizontalOptions="End" Text="Simon Jensen" Style="{StaticResource ProfileButton}"/>
+                    <Button Grid.Column="2" HorizontalOptions="End" Text="{Binding User.Username}" Style="{StaticResource ProfileButton}"/>
                 </Grid>
             </Border>
             <Border Grid.Column="1" Grid.Row="2" Style="{StaticResource MainBorder}">

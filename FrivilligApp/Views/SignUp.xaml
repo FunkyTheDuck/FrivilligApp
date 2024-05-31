@@ -43,7 +43,8 @@
                     <RowDefinition Height="100"/>
                     <RowDefinition Height="60"/>
                     <RowDefinition Height="60"/>
-                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="40"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -55,8 +56,10 @@
                 <Entry Grid.Column="1" Grid.Row="1" Text="{Binding username}" Placeholder="Username" Style="{StaticResource Input}"/>
                 <Entry Grid.Column="1" Grid.Row="2" IsPassword="True" Text="{Binding password}" Placeholder="Password" Style="{StaticResource Input}"/>
                 <Entry Grid.Column="1" Grid.Row="3" IsPassword="True" Text="{Binding repeatPassword}" Placeholder="Gentag password" Style="{StaticResource Input}"/>
-                <Button Grid.Column="1" Grid.Row="4" Text="Go back" HorizontalOptions="Start" Command="{Binding goBack}" Style="{StaticResource BackButton}"/>
-                <Button Grid.Column="1" Grid.Row="4" Text="Sign up" HorizontalOptions="End" Command="{Binding signUp}" Style="{StaticResource LoginButton}"/>
+                <CheckBox Grid.Column="1" Grid.Row="4" IsChecked="{Binding isVoluntary}" HorizontalOptions="Start" VerticalOptions="Center" WidthRequest="20" HeightRequest="20"/>
+                <Label Grid.Column="1" Grid.Row="4" Text="Er du Frivillig" VerticalOptions="Center" HorizontalOptions="Start" HorizontalTextAlignment="Center" WidthRequest="130" TextColor="White" FontSize="14"/>
+                <Button Grid.Column="1" Grid.Row="5" Text="Go back" HorizontalOptions="Start" Command="{Binding goBack}" Style="{StaticResource BackButton}"/>
+                <Button Grid.Column="1" Grid.Row="5" Text="Sign up" HorizontalOptions="End" Command="{Binding signUp}" Style="{StaticResource LoginButton}"/>
             </Grid>
         </Border>
     </Grid>

@@ -15,10 +15,86 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </ContentPage.Resources>
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to Events!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="500"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="30"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="30"/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.ColumnSpan="3" Style="{StaticResource HeaderBorder}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Start" Command="{Binding home}" Text="FrivilligApp" Style="{StaticResource HomeButton}"/>
+                <Button Grid.Column="2" HorizontalOptions="End" Text="{Binding User.Username}" Command="{Binding profil}" Style="{StaticResource ProfileButton}"/>
+            </Grid>
+        </Border>
+        <Border x:Name="MainBorder" Grid.Column="1" Grid.Row="2" Style="{StaticResource MainBorder}">
+            <CollectionView  Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Events}" x:Name="mCollectionView" SelectionMode="None">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="1" VerticalItemSpacing="10"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{StaticResource CollectionBorder}">
+                            <ContentView>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="165"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="150"/>
+                                        <RowDefinition Height="25"/>
+                                        <RowDefinition Height="25"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="10"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="10"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border Grid.ColumnSpan="3" Grid.Row="0" Style="{StaticResource ImageBorder}">
+                                        <Image Source="{Binding ImageUrl}" Aspect="Fill"/>
+                                    </Border>
+                                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding Title}" Style="{StaticResource Title}"/>
+                                    <Label Grid.Row="2" Grid.Column="1" Text="{Binding Description}" Style="{StaticResource Description}"/>
+                                    <Label Grid.Row="3" Grid.Column="1" Text="{Binding EventInfo.Distance, StringFormat='{0:F0} kilometer fra dig'}" Style="{StaticResource Distance}"/>
+                                    <Label Grid.Row="4" Grid.Column="1" Text="{Binding EventInfo.Address}" Style="{StaticResource Address}"/>
+                                    <Button Grid.Row="3" Grid.RowSpan="2" Grid.Column="1" IsVisible="Hidden" Style="{StaticResource meldTil}" Command="{Binding Path= BindingContext.meldTil, Source={Reference mCollectionView}}" CommandParameter="{Binding .}">
+                                        <Button.Triggers>
+                                            <MultiTrigger TargetType="Button">
+                                                <MultiTrigger.Conditions>
+                                                    <BindingCondition Binding="{Binding chosen}" Value="true" />
+                                                    <BindingCondition Binding="{Binding Path=BindingContext.User.IsVoluntary, Source={Reference MainBorder}}" Value="true"/>
+                                                </MultiTrigger.Conditions>
+                                                <Setter Property="BackgroundColor" Value="Orange"/>
+                                                <Setter Property="Text" Value="Meld fra"/>
+                                                <Setter Property="IsVisible" Value="Visible"/>
+                                            </MultiTrigger>
+                                            <MultiTrigger TargetType="Button">
+                                                <MultiTrigger.Conditions>
+                                                    <BindingCondition Binding="{Binding chosen}" Value="false" />
+                                                    <BindingCondition Binding="{Binding Path=BindingContext.User.IsVoluntary, Source={Reference MainBorder}}" Value="true"/>
+                                                </MultiTrigger.Conditions>
+                                                <Setter Property="BackgroundColor" Value="#0018F2"/>
+                                                <Setter Property="Text" Value="Meld til"/>
+                                                <Setter Property="IsVisible" Value="Visible"/>
+                                            </MultiTrigger>
+                                        </Button.Triggers>
+                                    </Button>
+                                </Grid>
+                            </ContentView>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Border>
+
+    </Grid>
 </ContentPage>

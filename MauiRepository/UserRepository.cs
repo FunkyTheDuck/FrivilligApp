@@ -25,7 +25,7 @@ namespace MauiRepository
                 DtoUser dtoUser = new DtoUser
                 {
                     Events = new(),
-                    IsVoluntary = true,
+                    IsVoluntary = user.IsVoluntary,
                     Username = user.Username,
                     UserCredebtials = new DtoUserCredentials
                     {
@@ -115,27 +115,27 @@ namespace MauiRepository
                     }
                 }
             }
-            if (user.UserInfo.Skills != null)
+            if (dtoUser.UserInfo.Skills != null)
             {
-                for (int i = 0; i < user.UserInfo.Skills.Count; i++)
+                for (int i = 0; i < dtoUser.UserInfo.Skills.Count; i++)
                 {
                     Skills skill = new Skills
                     {
-                        Id = user.UserInfo.Skills[i].Id,
-                        Skill = user.UserInfo.Skills[i].Skill
+                        Id = dtoUser.UserInfo.Skills[i].Id,
+                        Skill = dtoUser.UserInfo.Skills[i].Skill
                     };
                     user.UserInfo.Skills.Add(skill);
                 }
             }
 
-            if (user.UserInfo.interests != null)
+            if (dtoUser.UserInfo.Interests != null)
             {
-                for (int i = 0; i < user.UserInfo.interests.Count; i++)
+                for (int i = 0; i < dtoUser.UserInfo.Interests.Count; i++)
                 {
                     Interests interest = new Interests
                     {
-                        Id = user.UserInfo.interests[i].Id,
-                        Interest = user.UserInfo.interests[i].Interest
+                        Id = dtoUser.UserInfo.Interests[i].Id,
+                        Interest = dtoUser.UserInfo.Interests[i].Interest
                     };
                     user.UserInfo.interests.Add(interest);
                 }
