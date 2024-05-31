@@ -41,7 +41,7 @@
                     <ColumnDefinition Width="200"/>
                 </Grid.ColumnDefinitions>
                 <Button Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Start" Text="FrivilligApp" Style="{StaticResource HomeButton}"/>
-                <Button Grid.Column="2" HorizontalOptions="End" Text="Simon Jensen" Style="{StaticResource ProfileButton}"/>
+                <Button Grid.Column="2" HorizontalOptions="End" Text="{Binding user.Username}" Style="{StaticResource ProfileButton}"/>
             </Grid>
         </Border>
         <Label Grid.Row="2" Grid.Column="1" Style="{StaticResource InterestHeadline}" Text="Vælg nogle interesser du er interesseret i"/>

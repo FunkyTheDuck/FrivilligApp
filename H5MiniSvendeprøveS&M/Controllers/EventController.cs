@@ -26,6 +26,30 @@ namespace H5MiniSvendeprøveS_M.Controllers
                 return NotFound();
             }
         }
+        [HttpGet("/api/Event/EventToUser")]
+        public async Task<IActionResult> GetEventToUserAsync(int userId)
+        {
+            try
+            {
+                return Ok(await repo.GetEventToUserAsync(userId));
+            }
+            catch
+            {
+                return NotFound();
+            }
+        }
+        [HttpGet("/api/Event/EventToOwner")]
+        public async Task<IActionResult> GetEventToOwnerAsync(int userId)
+        {
+            try
+            {
+                return Ok(await repo.GetEventToOwnerAsync(userId));
+            }
+            catch
+            {
+                return NotFound();
+            }
+        }
         [HttpPut]
         public async Task<IActionResult> UpdateEventAsync(Event events)
         {
@@ -116,29 +140,23 @@ namespace H5MiniSvendeprøveS_M.Controllers
             }
             return BadRequest();
         }
-        [HttpGet("Owners")]
-        public async Task<IActionResult> GetOwnersEventsAsync(int userId)
+        [HttpDelete("/api/Event/RemoveVoluntary")]
+        public async Task<IActionResult> RemoveVoluntaryFromEvent(int userId, int eventId)
         {
+            bool checkIfSucces;
             try
             {
-                return Ok(await repo.GetOwnersEventsAsync(userId));
+                checkIfSucces = await repo.RemoveVoluntaryFromEvent(userId, eventId);
             }
             catch
             {
                 return NotFound();
             }
-        }
-        [HttpGet("Voluntary")]
-        public async Task<IActionResult> GetVoluntarysEventsAsync(int userId)
-        {
-            try
+            if (checkIfSucces)
             {
-                return Ok(await repo.GetVoluntarysEventsAsync(userId));
+                return Ok();
             }
-            catch
-            {
-                return NotFound();
-            }
+            return BadRequest();
         }
     }
 }

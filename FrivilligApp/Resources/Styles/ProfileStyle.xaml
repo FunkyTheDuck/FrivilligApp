@@ -2,5 +2,73 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FrivilligApp.Resources.Styles.ProfileStyle">
-
+    
+    <Style TargetType="Border">
+        <Setter Property="Stroke" Value="#2562FF"/>
+    </Style>
+    <Style TargetType="Border" x:Key="HeaderBorder">
+        <Setter Property="BackgroundColor" Value="#2562FF"/>
+    </Style>
+    <Style TargetType="Button" x:Key="HomeButton">
+        <Setter Property="FontSize" Value="22"/>
+        <Setter Property="WidthRequest" Value="150"/>
+        <Setter Property="VerticalOptions" Value="Center"/>
+        <Setter Property="HorizontalOptions" Value="Center"/>
+        <Setter Property="TextColor" Value="White"/>
+        <Setter Property="BackgroundColor" Value="#2562FF"/>
+    </Style>
+    <Style TargetType="Button" x:Key="ProfileButton">
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="WidthRequest" Value="150"/>
+        <Setter Property="VerticalOptions" Value="Center"/>
+        <Setter Property="HorizontalOptions" Value="Center"/>
+        <Setter Property="TextColor" Value="White"/>
+        <Setter Property="BackgroundColor" Value="#2562FF"/>
+    </Style>
+    <Style TargetType="Border" x:Key="MainBorder">
+        <Setter Property="Stroke" Value="Transparent"/>
+    </Style>
+    <Style TargetType="Label" x:Key="InterestHeadline">
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="Margin" Value="0,10"/>
+    </Style>
+    <Style TargetType="Label" x:Key="InterestSubHeadline">
+        <Setter Property="FontSize" Value="15"/>
+    </Style>
+    <Style TargetType="Label" x:Key="SkillHeadline">
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="Margin" Value="0,10"/>
+        <Setter Property="HorizontalTextAlignment" Value="Start"/>
+    </Style>
+    <Style TargetType="Label" x:Key="SkillSubHeadline">
+        <Setter Property="FontSize" Value="15"/>
+    </Style>
+    <Style TargetType="Label" x:Key="EventHeadline">
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="Margin" Value="0,10"/>
+        <Setter Property="HorizontalTextAlignment" Value="Start"/>
+    </Style>
+    <Style TargetType="Border" x:Key="CollectionBorder">
+        <Setter Property="Stroke" Value="Black"/>
+    </Style>
+    <Style TargetType="Border" x:Key="ImageBorder">
+        <Setter Property="Stroke" Value="Transparent"/>
+    </Style>
+    <Style TargetType="Label" x:Key="Title">
+        <Setter Property="TextColor" Value="Black"/>
+    </Style>
+    <Style TargetType="Label" x:Key="Description">
+        <Setter Property="TextColor" Value="Black"/>
+    </Style>
+    <Style TargetType="Label" x:Key="Distance">
+        <Setter Property="TextColor" Value="Black"/>
+    </Style>
+    <Style TargetType="Label" x:Key="Address">
+        <Setter Property="TextColor" Value="Black"/>
+    </Style>
+    <Style TargetType="Button" x:Key="meldTil">
+        <Setter Property="WidthRequest" Value="75"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="HorizontalOptions" Value="End"/>
+    </Style>
 </ResourceDictionary>
