@@ -1,12 +1,18 @@
-﻿
-using BlazorRepository;
+﻿using BlazorRepository;
 using FrontendModels;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace BlazorWebsite.Components.Pages
 {
     partial class Home
     {
-        protected EventRepository eventRepo { get; set; }
+        [Inject]
+        CustomAuthenticationStateProvider AuthenticationStateProvider { get; set; }
+        [Inject]
+        NavigationManager navigationManager { get; set; }
+        [Inject]
+        protected IEventRepository eventRepo { get; set; }
         public List<Event> Events {  get; set; }
         public User User { get; set; }
 
@@ -24,9 +30,18 @@ namespace BlazorWebsite.Components.Pages
                     Username = "Simon Jensen"
                 };
                 StateHasChanged();
-                eventRepo = new EventRepository();
                 Events = await eventRepo.GetAllEventsAsync(1, User.Id, 1, 1);
                 StateHasChanged();
+            }
+        }
+        protected override async Task OnInitializedAsync()
+        {
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+
+            if (!user.Identity.IsAuthenticated)
+            {
+                navigationManager.NavigateTo("/login");
             }
         }
         public async Task MeldBrugerTilAsync(int eventId)
@@ -34,7 +49,7 @@ namespace BlazorWebsite.Components.Pages
             bool checkIfSucces;
             try
             {
-                checkIfSucces = await eventRepo.AddVoluntaryToEvent(User.Id, eventId);
+                checkIfSucces = await eventRepo.AddVoluntaryToEventAsync(User.Id, eventId);
             }
             catch
             {

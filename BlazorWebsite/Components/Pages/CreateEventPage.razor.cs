@@ -1,14 +1,23 @@
 ﻿using BlazorRepository;
 using FrontendModels;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using System.ComponentModel;
 
 namespace BlazorWebsite.Components.Pages
 {
     partial class CreateEventPage
     {
-        protected EventRepository eventRepo { get; set; }
-        protected SkillsRepository skillRepo { get; set; }
-        protected InterestsRepository interestsRepo { get; set; }
+        [Inject]
+        CustomAuthenticationStateProvider AuthenticationStateProvider { get; set; }
+        [Inject]
+        NavigationManager navigationManager {  get; set; }
+        [Inject]
+        protected IEventRepository eventRepo {  get; set; }
+        [Inject]
+        protected ISkillsRepository skillRepo { get; set; }
+        [Inject]
+        protected IInterestsRepository interestsRepo { get; set; }
         public Event CreatedEvent { get; set; }
         public List<Skills> AllSkills { get; set; }
         public List<Interests> AllInterests { get; set; }
@@ -20,9 +29,6 @@ namespace BlazorWebsite.Components.Pages
         {
             if(firstRender)
             {
-                eventRepo = new EventRepository();
-                skillRepo = new SkillsRepository();
-                interestsRepo = new InterestsRepository();
                 CreatedEvent = new Event();
                 CreatedEvent.EventInfo = new EventInfo();
                 CreatedEvent.EventInfo.Skills = new List<Skills>();
@@ -30,6 +36,16 @@ namespace BlazorWebsite.Components.Pages
                 AllSkills = await skillRepo.GetAllAsync();
                 AllInterests = await interestsRepo.GetAllAsync();
                 StateHasChanged();
+            }
+        }
+        protected override async Task OnInitializedAsync()
+        {
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+
+            if (!user.Identity.IsAuthenticated)
+            {
+                navigationManager.NavigateTo("/login");
             }
         }
         public async void HandleValidSubmitAsync()

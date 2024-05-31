@@ -1,0 +1,12 @@
+﻿body {
+}
+.border {
+    border: 2px solid black;
+    margin-bottom: 30px;
+}
+.footer {
+    display: flex;
+}
+.star {
+    margin: 2px;
+}

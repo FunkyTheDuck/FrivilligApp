@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace BlazorRepository
 {
-    public class InterestsRepository
+    public class InterestsRepository : IInterestsRepository
     {
-        DBAccess db {  get; set; }
+        DBAccess db { get; set; }
         public InterestsRepository()
         {
             db = new DBAccess();
@@ -27,10 +27,10 @@ namespace BlazorRepository
             {
                 return null;
             }
-            if(dtoInterests != null && dtoInterests.Count != 0)
+            if (dtoInterests != null && dtoInterests.Count != 0)
             {
                 List<Interests> interests = new List<Interests>();
-                foreach(DtoInterests dto in dtoInterests)
+                foreach (DtoInterests dto in dtoInterests)
                 {
                     Interests newInterest = new Interests
                     {

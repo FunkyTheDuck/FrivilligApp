@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace BlazorRepository
 {
-    public class EventRepository
+    public class EventRepository : IEventRepository
     {
-        protected DBAccess db {  get; set; }
+        protected DBAccess db { get; set; }
         public EventRepository()
         {
             db = new DBAccess();
@@ -28,7 +28,7 @@ namespace BlazorRepository
             {
                 return null;
             }
-            if(dtoEvents != null && dtoEvents.Count != 0)
+            if (dtoEvents != null && dtoEvents.Count != 0)
             {
                 List<Event> events = new List<Event>();
                 for (int i = 0; i < dtoEvents.Count; i++)
@@ -43,24 +43,69 @@ namespace BlazorRepository
         }
         public async Task<bool> CreateAsync(Event events)
         {
-            if(events != null)
+            if (events != null)
             {
                 return await db.CreateEventAsync(ConvertToDto(events));
             }
             return false;
         }
-        public async Task<bool> AddVoluntaryToEvent(int userId, int eventId)
+        public async Task<bool> AddVoluntaryToEventAsync(int userId, int eventId)
         {
             try
             {
-                return await db.AddVoluntaryToEvent(userId, eventId);
+                return await db.AddVoluntaryToEventAsync(userId, eventId);
             }
             catch
             {
                 return false;
             }
         }
-
+        public async Task<List<Event>> GetVoluntaryEventsAsync(int userId)
+        {
+            List<DtoEvent> dtoEvents;
+            try
+            {
+                dtoEvents = await db.GetVoluntaryEventsAsync(userId);
+            }
+            catch
+            {
+                return null;
+            }
+            if (dtoEvents != null && dtoEvents.Count != 0)
+            {
+                List<Event> events = new List<Event>();
+                for (int i = 0; i < dtoEvents.Count; i++)
+                {
+                    Event newEvent = ConvertFromDto(dtoEvents[i]);
+                    events.Add(newEvent);
+                }
+                return events;
+            }
+            return null;
+        }
+        public async Task<List<Event>> GetOwnersEventsAsync(int userId)
+        {
+            List<DtoEvent> dtoEvents;
+            try
+            {
+                dtoEvents = await db.GetOwnersEventsAsync(userId);
+            }
+            catch
+            {
+                return null;
+            }
+            if (dtoEvents != null && dtoEvents.Count != 0)
+            {
+                List<Event> events = new List<Event>();
+                for (int i = 0; i < dtoEvents.Count; i++)
+                {
+                    Event newEvent = ConvertFromDto(dtoEvents[i]);
+                    events.Add(newEvent);
+                }
+                return events;
+            }
+            return null;
+        }
         private Event ConvertFromDto(DtoEvent events)
         {
             Event newEvent = new Event
@@ -80,7 +125,7 @@ namespace BlazorRepository
                     Skills = new List<Skills>()
                 },
             };
-            if(events.EventInfo.Interests != null)
+            if (events.EventInfo.Interests != null)
             {
                 foreach (DtoInterests dtoInterests in events.EventInfo.Interests)
                 {
@@ -92,7 +137,7 @@ namespace BlazorRepository
                     newEvent.EventInfo.Interests.Add(interests);
                 }
             }
-            if(events.EventInfo.Skills != null)
+            if (events.EventInfo.Skills != null)
             {
                 foreach (DtoSkills dtoSkill in events.EventInfo.Skills)
                 {
