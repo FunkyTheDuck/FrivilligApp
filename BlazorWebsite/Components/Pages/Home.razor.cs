@@ -25,11 +25,6 @@ namespace BlazorWebsite.Components.Pages
             if(firstRender)
             {
                 localStorageHelper = DotNetObjectReference.Create(new LocalStorageHelper(JS));
-                User = new User
-                {
-                    Id = 3,
-                    Username = "Simon Jensen"
-                };
                 User = await userRepo.GetUserFromIdAsync(Convert.ToInt32(await localStorageHelper.Value.GetAsync("userId")));
                 if(User != null)
                 {

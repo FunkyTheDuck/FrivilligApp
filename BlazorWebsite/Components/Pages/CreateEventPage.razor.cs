@@ -1,7 +1,9 @@
 ﻿using BlazorRepository;
+using BlazorWebsite.Utils;
 using FrontendModels;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.JSInterop;
 using System.ComponentModel;
 
 namespace BlazorWebsite.Components.Pages
@@ -14,9 +16,13 @@ namespace BlazorWebsite.Components.Pages
         protected ISkillsRepository skillRepo { get; set; }
         [Inject]
         protected IInterestsRepository interestsRepo { get; set; }
+        [Inject]
+        protected IUserRepository userRepo { get; set; }
         public Event CreatedEvent { get; set; }
         public List<Skills> AllSkills { get; set; }
         public List<Interests> AllInterests { get; set; }
+        private DotNetObjectReference<LocalStorageHelper> localStorageHelper;
+        public User User { get; set; }
 
         public bool errorHappend = false;
         public bool succesHappend = false;
@@ -25,6 +31,15 @@ namespace BlazorWebsite.Components.Pages
         {
             if(firstRender)
             {
+                localStorageHelper = DotNetObjectReference.Create(new LocalStorageHelper(JS));
+                try
+                {
+                    User = await userRepo.GetUserFromIdAsync(Convert.ToInt32(await localStorageHelper.Value.GetAsync("userId")));
+                }
+                catch
+                {
+                    //error happend
+                }
                 CreatedEvent = new Event();
                 CreatedEvent.EventInfo = new EventInfo();
                 CreatedEvent.EventInfo.Skills = new List<Skills>();
@@ -42,6 +57,7 @@ namespace BlazorWebsite.Components.Pages
                 bool checkIfSucces;
                 try
                 {
+                    CreatedEvent.OwnerId = User.Id;
                     checkIfSucces = await eventRepo.CreateAsync(CreatedEvent);
                 }
                 catch

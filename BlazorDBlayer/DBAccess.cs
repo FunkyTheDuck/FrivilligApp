@@ -53,7 +53,7 @@ namespace BlazorDBlayer
             HttpResponseMessage response;
             try
             {
-                response = await httpClient.GetAsync($"Event/Voluntary?userId={userId}");
+                response = await httpClient.GetAsync($"Event/EventToUser?userId={userId}");
             }
             catch
             {
@@ -83,7 +83,7 @@ namespace BlazorDBlayer
             HttpResponseMessage response;
             try
             {
-                response = await httpClient.GetAsync($"Event/Owner?userId={userId}");
+                response = await httpClient.GetAsync($"Event/EventToOwner?userId={userId}");
             }
             catch
             {

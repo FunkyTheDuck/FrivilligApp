@@ -15,26 +15,20 @@
                 <p class="header-text">Valgte Interesser:</p>
                 @if (User.UserInfo != null && User.UserInfo.interests != null)
                 {
-                    <p>
-                        @foreach (Interests i in User.UserInfo.interests)
-                        {
-                            @(i.Interest)
-                        }
-                        ,
-                    </p>
+                    @foreach (Interests i in User.UserInfo.interests)
+                    {
+                        <p>@(i.Interest),</p>
+                    }
                 }
             </div>
             <div class="user-skills">
                 <p class="header-text">Valgte færdigheder:</p>
                 @if (User.UserInfo != null && User.UserInfo.Skills != null)
                 {
-                    <p>
-                        @foreach (Skills s in User.UserInfo.Skills)
-                        {
-                            @(s.Skill)
-                        }
-                        ,
-                    </p>
+                    @foreach (Skills s in User.UserInfo.Skills)
+                    {
+                        <p>@(s.Skill),</p>
+                    }
                 }
             </div>
             <div class="buttons">

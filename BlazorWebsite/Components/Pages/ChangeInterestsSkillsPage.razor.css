@@ -1,23 +1,66 @@
 ﻿body {
 }
 .page-container {
-
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .header {
+
 }
 
 .header-text {
 
 }
 .interests-container {
-
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
 .interests {
-
+    width: 100%;
+    color: white;
+    background-color: #2562FF;
+    display: flex;
+    flex-direction: row;
+}
+.interest {
+    margin: 10px;
+    display: flex;
+    flex-direction: row;
 }
 .skills-container {
-
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
 .skills {
-
+    width: 100%;
+    color: white;
+    background-color: #2562FF;
+    display: flex;
+    flex-direction: row;
+}
+.skill {
+    margin: 10px;
+    display: flex;
+    flex-direction: row;
+}
+.input-checkbox {
+    width: 25px;
+    height: 25px;
+}
+.buttons {
+    display: flex;
+    justify-content: flex-end;
+}
+.button {
+    background-color: #2562FF;
+    border: 0px;
+    color: white;
+    width: 75px;
+    height: 30px;
+    border-radius: 10px;
 }
