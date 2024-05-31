@@ -1,0 +1,59 @@
+﻿@page "/choose"
+@rendermode InteractiveServer
+
+<div class="page-container">
+    <div class="interests-container">
+        <div class="header">
+            <h3 class="header-text"></h3>
+        </div>
+        <div class="interests">
+            @if (AllInterests != null && User != null && User.UserInfo == null)
+            {
+                @foreach (Interests i in AllInterests)
+                {
+                    if (User.UserInfo.interests.Contains(i))
+                    {
+                        <div>
+                            <input checked="checked" type="checkbox" @onclick="() => RemoveFromInterestsAsync(i)" />
+                            <p>@i.Interest</p>
+                        </div>
+                    }
+                    else
+                    {
+                        <div>
+                            <input type="checkbox" @onclick="() => AddTooInterestsAsync(i)" />
+                            <p>@i.Interest</p>
+                        </div>
+                    }
+                }
+            }
+        </div>
+    </div>
+    <div class="skills-container">
+        <div class="header">
+            <h3 class="header-text"></h3>
+        </div>
+        <div class="skills">
+            @if (AllInterests != null && User != null && User.UserInfo == null)
+            {
+                @foreach (Skills s in AllSkills)
+                {
+                    if (User.UserInfo.Skills.Contains(s))
+                    {
+                        <div>
+                            <input checked="checked" type="checkbox" @onclick="() => RemoveFromSkillsAsync(s)" />
+                            <p>@s.Skill</p>
+                        </div>
+                    }
+                    else
+                    {
+                        <div>
+                            <input type="checkbox" @onclick="() => AddTooSkillsAsync(s)" />
+                            <p>@s.Skill</p>
+                        </div>
+                    }
+                }
+            }
+        </div>
+    </div>
+</div>

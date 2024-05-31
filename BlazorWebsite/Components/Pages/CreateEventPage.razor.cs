@@ -9,10 +9,6 @@ namespace BlazorWebsite.Components.Pages
     partial class CreateEventPage
     {
         [Inject]
-        CustomAuthenticationStateProvider AuthenticationStateProvider { get; set; }
-        [Inject]
-        NavigationManager navigationManager {  get; set; }
-        [Inject]
         protected IEventRepository eventRepo {  get; set; }
         [Inject]
         protected ISkillsRepository skillRepo { get; set; }
@@ -36,16 +32,6 @@ namespace BlazorWebsite.Components.Pages
                 AllSkills = await skillRepo.GetAllAsync();
                 AllInterests = await interestsRepo.GetAllAsync();
                 StateHasChanged();
-            }
-        }
-        protected override async Task OnInitializedAsync()
-        {
-            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-            var user = authState.User;
-
-            if (!user.Identity.IsAuthenticated)
-            {
-                navigationManager.NavigateTo("/login");
             }
         }
         public async void HandleValidSubmitAsync()

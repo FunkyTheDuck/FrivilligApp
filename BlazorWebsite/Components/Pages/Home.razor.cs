@@ -1,21 +1,21 @@
 ﻿using BlazorRepository;
+using BlazorWebsite.Utils;
 using FrontendModels;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.JSInterop;
 
 namespace BlazorWebsite.Components.Pages
 {
     partial class Home
     {
         [Inject]
-        CustomAuthenticationStateProvider AuthenticationStateProvider { get; set; }
-        [Inject]
-        NavigationManager navigationManager { get; set; }
-        [Inject]
         protected IEventRepository eventRepo { get; set; }
+        [Inject]
+        protected IUserRepository userRepo { get; set; }
         public List<Event> Events {  get; set; }
         public User User { get; set; }
-
+        private DotNetObjectReference<LocalStorageHelper> localStorageHelper;
 
         public bool errorHappend;
         public bool succesHappend;
@@ -24,24 +24,19 @@ namespace BlazorWebsite.Components.Pages
         {
             if(firstRender)
             {
+                localStorageHelper = DotNetObjectReference.Create(new LocalStorageHelper(JS));
                 User = new User
                 {
                     Id = 3,
                     Username = "Simon Jensen"
                 };
+                User = await userRepo.GetUserFromIdAsync(Convert.ToInt32(await localStorageHelper.Value.GetAsync("userId")));
+                if(User != null)
+                {
+                    StateHasChanged();
+                    Events = await eventRepo.GetAllEventsAsync(1, User.Id, 1, 1);
+                }
                 StateHasChanged();
-                Events = await eventRepo.GetAllEventsAsync(1, User.Id, 1, 1);
-                StateHasChanged();
-            }
-        }
-        protected override async Task OnInitializedAsync()
-        {
-            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-            var user = authState.User;
-
-            if (!user.Identity.IsAuthenticated)
-            {
-                navigationManager.NavigateTo("/login");
             }
         }
         public async Task MeldBrugerTilAsync(int eventId)

@@ -1,6 +1,8 @@
 ﻿@page "/"
 @rendermode InteractiveServer
 
+<script src="localStorage.js"></script>
+
 <PageTitle>Home</PageTitle>
 @if(User != null) {
     <NavbarComp User="User" />

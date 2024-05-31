@@ -1,6 +1,8 @@
 ﻿@page "/signup"
 @rendermode InteractiveServer
 
+<script src="localStorage.js"></script>
+
 <NavbarComp />
 
 <div class="container">
@@ -12,9 +14,13 @@
             <input class="input" placeholder="Username" @bind="Username" />
             <input class="input" type="password" placeholder="Password" @bind="Password" />
             <input class="input" type="password" placeholder="Gentag password" @bind="RepeatedPassword"/>
+            <div class="checkbox-container">
+                <input class="input-checkbox" type="checkbox" @bind="IsVoluntary" />
+                <p class="checkbox-text">Er du frivillig?</p>
+            </div>
         </div>
         <div class="buttons">
-            <button class="button">Gå tilbage</button>
+            <button class="button" @onclick="GoBackToLogInAsync">Gå tilbage</button>
             <button class="button" @onclick="SignUserUpAsync">Sign up</button>
         </div>
     </div>

@@ -200,6 +200,37 @@ namespace BlazorDBlayer
             return false;
         }
 
+        public async Task<DtoUser> GetUserFromIdAsync(int userId)
+        {
+            HttpResponseMessage response;
+            try
+            {
+                response = await httpClient.GetAsync($"User/{userId}");
+            }
+            catch
+            {
+                return null;
+            }
+            if (response.IsSuccessStatusCode)
+            {
+                DtoUser user;
+                try
+                {
+                    string json = await response.Content.ReadAsStringAsync();
+                    user = JsonConvert.DeserializeObject<DtoUser>(json);
+                }
+                catch
+                {
+                    return null;
+                }
+                if (user != null)
+                {
+                    return user;
+                }
+            }
+            return null;
+        }
+
         #endregion
 
         #region RatingsCRUD

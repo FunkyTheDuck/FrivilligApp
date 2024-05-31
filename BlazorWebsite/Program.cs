@@ -12,22 +12,20 @@ builder.Services.AddRazorComponents()
 
 
 // Add services to the container.
-builder.Services.AddRazorPages();
-builder.Services.AddServerSideBlazor();
 
 // Configure authentication
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(options =>
-    {
-        options.LoginPath = "/login"; // Set the login path
-    });
+//builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+//    .AddCookie(options =>
+//    {
+//        options.LoginPath = "/login"; // Set the login path
+//    });
 
-builder.Services.AddAuthorizationCore();
+//builder.Services.AddAuthorizationCore();
 
 // Register a custom AuthenticationStateProvider
-builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
-builder.Services.AddScoped<CustomAuthenticationStateProvider>(); // Add this line
-builder.Services.AddHttpContextAccessor();
+//builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
+//builder.Services.AddScoped<CustomAuthenticationStateProvider>(); // Add this line
+//builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddSingleton<IEventRepository, EventRepository>();
 builder.Services.AddSingleton<IInterestsRepository, InterestsRepository>();
@@ -51,8 +49,8 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAntiforgery();
 
-app.UseAuthentication();
-app.UseAuthorization();
+//app.UseAuthentication();
+//app.UseAuthorization();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();

@@ -33,7 +33,7 @@ namespace BlazorRepository
             }
             return null;
         }
-        public async Task<bool> CreateUserAsync(string username, string password)
+        public async Task<bool> CreateUserAsync(string username, string password, bool IsVoluntary)
         {
             User user = new User
             {
@@ -43,7 +43,7 @@ namespace BlazorRepository
                     Password = HashPassword(password)
                 },
                 UserInfo = new UserInfo(),
-
+                IsVoluntary = IsVoluntary
 
             };
             DtoUser dtoUser = ConvertToDto(user);
@@ -58,6 +58,24 @@ namespace BlazorRepository
             }
             return checkIfSucces;
         }
+        public async Task<User> GetUserFromIdAsync(int userId)
+        {
+            DtoUser dtoUser;
+            try
+            {
+                dtoUser = await db.GetUserFromIdAsync(userId);
+            }
+            catch
+            {
+                return null;
+            }
+            if(dtoUser != null)
+            {
+                return ConvertFromDto(dtoUser);
+            }
+            return null;
+        }
+
         private User ConvertFromDto(DtoUser dtoUser)
         {
             User user = new User

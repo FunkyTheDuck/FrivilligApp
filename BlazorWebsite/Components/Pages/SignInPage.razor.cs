@@ -1,5 +1,9 @@
 ﻿using BlazorRepository;
+using BlazorWebsite.Utils;
+using FrontendModels;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
+using System.ComponentModel;
 
 namespace BlazorWebsite.Components.Pages
 {
@@ -7,10 +11,12 @@ namespace BlazorWebsite.Components.Pages
     {
         [Inject]
         protected IUserRepository userRepo {  get; set; }
+        private DotNetObjectReference<LocalStorageHelper> localStorageHelper;
+
         public string Username { get; set; }
         public string Password { get; set; }
         public string RepeatedPassword { get; set; }
-
+        public bool IsVoluntary { get; set; }
         public async Task SignUserUpAsync()
         {
             if(Username.Length > 3)
@@ -21,10 +27,16 @@ namespace BlazorWebsite.Components.Pages
                 }
                 if(Password == RepeatedPassword)
                 {
-                    bool checkIfSucces = await userRepo.CreateUserAsync(Username, Password);
+                    bool checkIfSucces = await userRepo.CreateUserAsync(Username, Password, IsVoluntary);
                     if(checkIfSucces)
                     {
-
+                        localStorageHelper = DotNetObjectReference.Create(new LocalStorageHelper(JS));
+                        User user = await userRepo.LogUserInAsync(Username, Password);
+                        if(user != null)
+                        {
+                            await localStorageHelper.Value.SaveAsync("userId", user.Id.ToString());
+                        }
+                        navigationManager.NavigateTo("choose");
                     }
                 }
             }
@@ -32,7 +44,7 @@ namespace BlazorWebsite.Components.Pages
         }
         public async Task GoBackToLogInAsync()
         {
-
+            navigationManager.NavigateTo("login");
         }
     }
 }

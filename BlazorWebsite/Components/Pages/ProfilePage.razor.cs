@@ -1,6 +1,8 @@
 ﻿using BlazorRepository;
+using BlazorWebsite.Utils;
 using FrontendModels;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 
 namespace BlazorWebsite.Components.Pages
 {
@@ -12,6 +14,9 @@ namespace BlazorWebsite.Components.Pages
         protected IRatingRepository ratingRepo { get; set; }
         [Inject]
         protected IUserRepository userRepo { get; set; }
+
+        private DotNetObjectReference<LocalStorageHelper> localStorageHelper;
+
         public User User { get; set; }
         public List<Event> Events { get; set; }
         public List<Ratings> NewestRatings { get; set; }
@@ -20,23 +25,23 @@ namespace BlazorWebsite.Components.Pages
         {
             if(firstRender)
             {
-                User = new User
-                {
-                    Id = 3,
-                    Username = "Simon Jensen",
-                    IsVoluntary = true
-                };
+                localStorageHelper = DotNetObjectReference.Create(new LocalStorageHelper(JS));
+                User = await userRepo.GetUserFromIdAsync(Convert.ToInt32(await localStorageHelper.Value.GetAsync("userId")));
                 StateHasChanged();
-                if(User.IsVoluntary)
+                if(User != null)
                 {
-                    Events = await eventRepo.GetVoluntaryEventsAsync(User.Id);
-                } else
-                {
-                    Events = await eventRepo.GetOwnersEventsAsync(User.Id);
+                    if (User.IsVoluntary)
+                    {
+                        Events = await eventRepo.GetVoluntaryEventsAsync(User.Id);
+                    }
+                    else
+                    {
+                        Events = await eventRepo.GetOwnersEventsAsync(User.Id);
+                    }
+                    StateHasChanged();
+                    NewestRatings = await ratingRepo.GetNewestRatingsAsync(User.Id);
+                    StateHasChanged();
                 }
-                StateHasChanged();
-                NewestRatings = await ratingRepo.GetNewestRatingsAsync(User.Id);
-                StateHasChanged();
             }
         }
         public async Task RemoveUserFromEvent()
